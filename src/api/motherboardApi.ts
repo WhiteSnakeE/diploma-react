@@ -1,13 +1,13 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {MotherBoard} from "./types/motherboard/MotherBoard";
-export const customerApi = createApi({
-    reducerPath: 'customerApi',
-    baseQuery: fetchBaseQuery({baseUrl: `${process.env.REACT_APP_BACKEND_CUSTOMER_URL}/api`}),
+export const MotherboardApi = createApi({
+    reducerPath: 'motherBoardApi',
+    baseQuery: fetchBaseQuery({baseUrl: process.env.REACT_APP_BACKEND}),
     endpoints: (builder) => ({
-        getCustomerById: builder.query<MotherBoard, number>({
-            query: (id) => `customer/${id}`,
+        getAllMotherBoards: builder.query<MotherBoard[], void>({
+            query: () => `/motherboards`,
         }),
     }),
 })
 
-export const {useGetCustomerByIdQuery} = customerApi;
+export const {useGetAllMotherBoardsQuery} = MotherboardApi;

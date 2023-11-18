@@ -5,7 +5,7 @@ import {ExpansionSlots} from "./ExpansionSlots";
 import {InternalInterfaces} from "./InternalInterfaces";
 
 export type MotherBoard = {
-    _id:number,
+    _id: string,
     name:string,
     price:number,
     platform: Platform,
