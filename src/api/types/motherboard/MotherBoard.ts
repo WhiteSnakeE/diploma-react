@@ -14,7 +14,7 @@ export type MotherBoard = {
     network_and_multimedia: NetworkAndMultimedia,
     expansion_slots: ExpansionSlots,
     internal_interfaces: InternalInterfaces,
-    status:string|null
+    status: string | null
 }
 
 

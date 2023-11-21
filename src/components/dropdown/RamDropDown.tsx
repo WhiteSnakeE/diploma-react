@@ -3,7 +3,12 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {RamApi, useGetAllRamsQuery} from "../../api/ramApi";
 import {useAppDispatch} from "../../api/store";
-import {chooseProcessor, chooseRam} from "../../api/slices/componentsSlice";
+import {
+    chooseMotherboard,
+    chooseProcessor,
+    chooseRam,
+    motherBoardCompatibilitySlice
+} from "../../api/slices/componentsSlice";
 
 export const RamDropDown = () => {
     const {data: rams, error, isLoading} = useGetAllRamsQuery();
@@ -27,9 +32,22 @@ export const RamDropDown = () => {
         console.log(selectedIndex);
         const selectedObject = rams?.find(ram => ram.name === selectedIndex);
         if (selectedObject) {
-            const result = await dispatch(chooseRam(selectedObject)).unwrap();
+            dispatch(motherBoardCompatibilitySlice.actions.addRamStatus(selectedObject));
+
+            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
+                undefined, // initialState будет автоматически взято из редуктора
+                motherBoardCompatibilitySlice.actions.addRamStatus(selectedObject)
+            );
+
+            console.log(updatedConfiguration);
+
+            // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
+            const result = await dispatch(chooseRam(updatedConfiguration)).unwrap();
+
             setIsOpen(!isOpen);
-            setAnswer(result);
+            if (result.ram?.status) {
+                setAnswer(result.ram.status);
+            }
             setSelectedValue(selectedIndex);
         }
     };

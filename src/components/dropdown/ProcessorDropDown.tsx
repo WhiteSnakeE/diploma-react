@@ -2,7 +2,12 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {ProcessorsApi, useGetAllProcessorsQuery} from "../../api/proccessorsApi";
-import {chooseMotherboard, chooseProcessor} from "../../api/slices/componentsSlice";
+import {
+    chooseMotherboard,
+    chooseProcessor,
+    chooseRam,
+    motherBoardCompatibilitySlice
+} from "../../api/slices/componentsSlice";
 import {useAppDispatch} from "../../api/store";
 
 export const ProcessorDropDown = () => {
@@ -27,9 +32,22 @@ export const ProcessorDropDown = () => {
         console.log(selectedIndex);
         const selectedObject = processors?.find(processor => processor.name === selectedIndex);
         if (selectedObject) {
-            const result = await dispatch(chooseProcessor(selectedObject)).unwrap();
+            dispatch(motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject));
+
+            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
+                undefined, // initialState будет автоматически взято из редуктора
+                motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject)
+            );
+
+            console.log(updatedConfiguration);
+
+            // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
+            const result = await dispatch(chooseProcessor(updatedConfiguration)).unwrap();
+
             setIsOpen(!isOpen);
-            setAnswer(result);
+            if (result.processor?.status) {
+                setAnswer(result.processor.status);
+            }
             setSelectedValue(selectedIndex);
         }
     };

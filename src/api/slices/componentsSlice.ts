@@ -23,7 +23,7 @@ export const chooseMotherboard  = createAsyncThunk<ComputerConfiguration, Comput
         }
 );
 
-export const chooseProcessor  = createAsyncThunk<ComputerConfiguration, Processor, {dispatch: AppDispatch}>(
+export const chooseProcessor  = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {dispatch: AppDispatch}>(
     'check/processors',
     async (processor, {dispatch}) =>{
         try {
@@ -40,7 +40,7 @@ export const chooseProcessor  = createAsyncThunk<ComputerConfiguration, Processo
     }
 );
 
-export const chooseRam  = createAsyncThunk<ComputerConfiguration, Ram, {dispatch: AppDispatch}>(
+export const chooseRam = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {dispatch: AppDispatch}>(
     'check/rams',
     async (ram, {dispatch}) =>{
         try {
@@ -57,7 +57,7 @@ export const chooseRam  = createAsyncThunk<ComputerConfiguration, Ram, {dispatch
     }
 );
 
-interface ComputerConfiguration{
+interface ComputerConfiguration {
     motherboard: MotherBoard | null ;
     processor: Processor|  null;
     ram: Ram | null;
@@ -73,7 +73,19 @@ export const motherBoardCompatibilitySlice = createSlice({
     initialState,
     reducers: {
         addMotherboardStatus: (state, action: PayloadAction<MotherBoard>) => {
-            return { ...state, motherboard: action.payload };
+            // Обновляем информацию о материнской плате в состоянии
+            state.motherboard = action.payload;
+            return state; // Возвращаем обновленное состояние
+        },
+        addProcessorStatus: (state, action: PayloadAction<Processor>) => {
+            // Обновляем информацию о материнской плате в состоянии
+            state.processor = action.payload;
+            return state; // Возвращаем обновленное состояние
+        },
+        addRamStatus: (state, action: PayloadAction<Ram>) => {
+            // Обновляем информацию о материнской плате в состоянии
+            state.ram = action.payload;
+            return state; // Возвращаем обновленное состояние
         },
     },
     extraReducers: (builder) => {

@@ -1,7 +1,7 @@
 import {MotherboardApi, useGetAllMotherBoardsQuery} from "../../api/motherboardApi";
 import React, {useEffect, useState} from "react";
 import {useAppDispatch} from "../../api/store";
-import {chooseMotherboard, motherBoardCompatibilitySlice} from "../../api/slices/componentsSlice";
+import {chooseMotherboard, chooseRam, motherBoardCompatibilitySlice} from "../../api/slices/componentsSlice";
 
 
 export const MotherboardDropDown = () => {
@@ -26,10 +26,27 @@ export const MotherboardDropDown = () => {
         console.log(selectedIndex);
         const selectedObject = motherboards?.find(motherboard => motherboard.name === selectedIndex);
         if (selectedObject) {
-            const computerConfiguration = await motherBoardCompatibilitySlice.caseReducers.addMotherboardStatus(selectedObject);
-            const result = await dispatch(chooseMotherboard(selectedObject)).unwrap();
+            // Вызываем Redux action, чтобы обновить состояние
+            dispatch(motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject));
+
+            // Получаем обновленный ComputerConfiguration из состояния
+            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
+                undefined, // initialState будет автоматически взято из редуктора
+                motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject)
+            );
+
+            // updatedConfiguration теперь содержит новый объект ComputerConfiguration с обновленной материнской платой
+            console.log(updatedConfiguration);
+            // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
+            const result = await dispatch(chooseMotherboard(updatedConfiguration)).unwrap();
+
+            console.log(result);
+
             setIsOpen(!isOpen);
-            setAnswer(result);
+            if (result.motherboard?.status) {
+                setAnswer(result.motherboard.status);
+            }
+
             setSelectedValue(selectedIndex);
         }
     };
