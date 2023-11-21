@@ -7,5 +7,6 @@ export type Hdd = {
     formFactor:number,
     interfaceType:string,
     speed:string,
-    noiseLevel:number
+    noiseLevel:number,
+    status:string|null
 }

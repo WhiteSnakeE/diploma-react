@@ -4,9 +4,6 @@ import {AppDispatch} from "../store";
 import axios from "axios";
 import {Processor} from "../types/processor/Processor";
 import {Ram} from "../types/ram/Ram";
-import {MotherBoardStatus} from "../status/MotherBoardStatus";
-import {ProcessorStatus} from "../status/ProcessorStatus";
-import {RamStatus} from "../status/RamStatus";
 
 
 export const chooseMotherboard  = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {dispatch: AppDispatch}>(
@@ -61,37 +58,37 @@ export const chooseRam  = createAsyncThunk<ComputerConfiguration, Ram, {dispatch
 );
 
 interface ComputerConfiguration{
-    motherboardStatus: MotherBoardStatus | null ;
-    processorStatus: ProcessorStatus |  null;
-    ramStatus: RamStatus | null;
+    motherboard: MotherBoard | null ;
+    processor: Processor|  null;
+    ram: Ram | null;
 }
 const initialState: ComputerConfiguration = {
-    motherboardStatus: null,
-    processorStatus: null,
-    ramStatus: null,
+    motherboard: null,
+    processor: null,
+    ram: null,
 };
 
 export const motherBoardCompatibilitySlice = createSlice({
     name: 'motherBoardCompatibility',
     initialState,
     reducers: {
-        addMotherboardStatus: (state, action: PayloadAction<MotherBoardStatus>) => {
-            return { ...state, motherboardStatus: action.payload };
+        addMotherboardStatus: (state, action: PayloadAction<MotherBoard>) => {
+            return { ...state, motherboard: action.payload };
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(chooseMotherboard.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
                 const data = action.payload;
-                state.motherboardStatus = data.motherboardStatus;
+                state.motherboard = data.motherboard;
         })
             .addCase(chooseProcessor.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
                 const data = action.payload;
-                state.processorStatus = data.processorStatus;
+                state.processor = data.processor;
             })
             .addCase(chooseRam.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
                 const data = action.payload;
-                state.ramStatus = data.ramStatus;
+                state.ram = data.ram;
             });
     },
 });

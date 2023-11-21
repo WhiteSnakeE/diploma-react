@@ -1,7 +1,7 @@
 import {MotherboardApi, useGetAllMotherBoardsQuery} from "../../api/motherboardApi";
 import React, {useEffect, useState} from "react";
 import {useAppDispatch} from "../../api/store";
-import {chooseMotherboard} from "../../api/slices/componentsSlice";
+import {chooseMotherboard, motherBoardCompatibilitySlice} from "../../api/slices/componentsSlice";
 
 
 export const MotherboardDropDown = () => {
@@ -26,6 +26,7 @@ export const MotherboardDropDown = () => {
         console.log(selectedIndex);
         const selectedObject = motherboards?.find(motherboard => motherboard.name === selectedIndex);
         if (selectedObject) {
+            const computerConfiguration = await motherBoardCompatibilitySlice.caseReducers.addMotherboardStatus(selectedObject);
             const result = await dispatch(chooseMotherboard(selectedObject)).unwrap();
             setIsOpen(!isOpen);
             setAnswer(result);

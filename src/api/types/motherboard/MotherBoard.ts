@@ -13,7 +13,8 @@ export type MotherBoard = {
     memory: Memory,
     network_and_multimedia: NetworkAndMultimedia,
     expansion_slots: ExpansionSlots,
-    internal_interfaces: InternalInterfaces
+    internal_interfaces: InternalInterfaces,
+    status:string|null
 }
 
 
