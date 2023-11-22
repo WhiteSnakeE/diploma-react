@@ -1,13 +1,15 @@
 import {MotherboardApi, useGetAllMotherBoardsQuery} from "../../api/motherboardApi";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useAppDispatch} from "../../api/store";
-import {chooseMotherboard, chooseRam, motherBoardCompatibilitySlice} from "../../api/slices/componentsSlice";
+import {ComputerContext} from "../../context/ComputerConfigurationContext";
 
 
-export const MotherboardDropDown = () => {
+
+
+export const MotherboardDropDown: React.FC = () => {
     const {data: motherboards, error, isLoading} = MotherboardApi.useGetAllMotherBoardsQuery();
     const [isOpen, setIsOpen] = useState(false);
-    const [componentList, setComponentList] = useState([]);
+    const motherboardContext = useContext(ComputerContext)
     const [answer, setAnswer] = useState("Everything is okay");
     const [selectedValue, setSelectedValue] = useState("");
     const dispatch = useAppDispatch();
@@ -22,32 +24,14 @@ export const MotherboardDropDown = () => {
 
 
     const toggleDropdown = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(motherboardContext?.motherboard)
         const selectedIndex = event.target.value;
         console.log(selectedIndex);
         const selectedObject = motherboards?.find(motherboard => motherboard.name === selectedIndex);
         if (selectedObject) {
-            // Вызываем Redux action, чтобы обновить состояние
-            dispatch(motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject));
-
-            // Получаем обновленный ComputerConfiguration из состояния
-            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
-                undefined, // initialState будет автоматически взято из редуктора
-                motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject)
-            );
-
-            // updatedConfiguration теперь содержит новый объект ComputerConfiguration с обновленной материнской платой
-            console.log(updatedConfiguration);
-            // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
-            const result = await dispatch(chooseMotherboard(updatedConfiguration)).unwrap();
-
-            console.log(result);
-
             setIsOpen(!isOpen);
-            if (result.motherboard?.status) {
-                setAnswer(result.motherboard.status);
-            }
-
             setSelectedValue(selectedIndex);
+            motherboardContext?.setMotherboard(selectedObject)
         }
     };
 

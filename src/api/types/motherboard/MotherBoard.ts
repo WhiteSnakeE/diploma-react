@@ -8,12 +8,12 @@ export type MotherBoard = {
     _id: string,
     name:string,
     price:number,
-    platform: Platform,
+    platform: Platform|null,
     max_TDP_proccesor: string,
-    memory: Memory,
-    network_and_multimedia: NetworkAndMultimedia,
-    expansion_slots: ExpansionSlots,
-    internal_interfaces: InternalInterfaces,
+    memory: Memory|null,
+    network_and_multimedia: NetworkAndMultimedia|null,
+    expansion_slots: ExpansionSlots|null,
+    internal_interfaces: InternalInterfaces|null,
     status: string | null
 }
 
