@@ -1,5 +1,5 @@
 
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {ProcessorsApi, useGetAllProcessorsQuery} from "../../api/proccessorsApi";
 import {
@@ -9,10 +9,12 @@ import {
     motherBoardCompatibilitySlice
 } from "../../api/slices/componentsSlice";
 import {useAppDispatch} from "../../api/store";
+import {ComputerContext} from "../../context/ComputerConfigurationContext";
 
 export const ProcessorDropDown = () => {
     const {data: processors, error, isLoading} = ProcessorsApi.useGetAllProcessorsQuery();
     const [isOpen, setIsOpen] = useState(false);
+    const motherboardContext = useContext(ComputerContext)
     const [componentList, setComponentList] = useState([]);
     const [answer, setAnswer] = useState("Everything is okay");
     const [selectedValue, setSelectedValue] = useState("");
@@ -28,14 +30,20 @@ export const ProcessorDropDown = () => {
 
 
     const toggleDropdown = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(motherboardContext?.processor)
         const selectedIndex = event.target.value;
         console.log(selectedIndex);
         const selectedObject = processors?.find(processor => processor.name === selectedIndex);
         if (selectedObject) {
             dispatch(motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject));
-
+            motherboardContext?.setProcessor(selectedObject)
             const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
-                undefined, // initialState будет автоматически взято из редуктора
+                {
+                    motherboard: motherboardContext?.motherboard,
+                    processor: motherboardContext?.processor,
+                    ram: motherboardContext?.ram
+
+                }, // initialState будет автоматически взято из редуктора
                 motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject)
             );
 
@@ -68,7 +76,5 @@ export const ProcessorDropDown = () => {
                 </div>
             </div>
         </div>
-
-
     );
 };

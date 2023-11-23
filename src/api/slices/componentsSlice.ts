@@ -1,31 +1,35 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {MotherBoard} from "../types/motherboard/MotherBoard";
+import {Motherboard} from "../types/motherboard/Motherboard";
 import {AppDispatch} from "../store";
 import axios from "axios";
 import {Processor} from "../types/processor/Processor";
 import {Ram} from "../types/ram/Ram";
 
 
-export const chooseMotherboard  = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {dispatch: AppDispatch}>(
+export const chooseMotherboard = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
+    dispatch: AppDispatch
+}>(
     'check/motherboards',
-        async (computerConfiguration, {dispatch}) =>{
+    async (motherboard, {dispatch}) => {
         try {
-
-        const response = await axios.post<ComputerConfiguration>(
-                    `${process.env.REACT_APP_BACKEND}/check/motherboards`,
-                        computerConfiguration
-        );
+            console.log(motherboard)
+            const response = await axios.post<ComputerConfiguration>(
+                `${process.env.REACT_APP_BACKEND}/check/motherboards`,
+                motherboard
+            );
             return response.data;
         } catch (error) {
             console.error('Error while checking motherboards:', error);
             throw error; // Пробрасываем ошибку дальше
         }
-        }
+    }
 );
 
-export const chooseProcessor  = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {dispatch: AppDispatch}>(
+export const chooseProcessor = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
+    dispatch: AppDispatch
+}>(
     'check/processors',
-    async (processor, {dispatch}) =>{
+    async (processor, {dispatch}) => {
         try {
 
             const response = await axios.post<ComputerConfiguration>(
@@ -40,9 +44,9 @@ export const chooseProcessor  = createAsyncThunk<ComputerConfiguration, Computer
     }
 );
 
-export const chooseRam = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {dispatch: AppDispatch}>(
+export const chooseRam = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, { dispatch: AppDispatch }>(
     'check/rams',
-    async (ram, {dispatch}) =>{
+    async (ram, {dispatch}) => {
         try {
 
             const response = await axios.post<ComputerConfiguration>(
@@ -58,10 +62,11 @@ export const chooseRam = createAsyncThunk<ComputerConfiguration, ComputerConfigu
 );
 
 interface ComputerConfiguration {
-    motherboard: MotherBoard | null ;
-    processor: Processor|  null;
-    ram: Ram | null;
+    motherboard: Motherboard | null | undefined;
+    processor: Processor | null | undefined;
+    ram: Ram | null | undefined;
 }
+
 const initialState: ComputerConfiguration = {
     motherboard: null,
     processor: null,
@@ -72,7 +77,7 @@ export const motherBoardCompatibilitySlice = createSlice({
     name: 'motherBoardCompatibility',
     initialState,
     reducers: {
-        addMotherboardStatus: (state, action: PayloadAction<MotherBoard>) => {
+        addMotherboardStatus: (state, action: PayloadAction<Motherboard>) => {
             // Обновляем информацию о материнской плате в состоянии
             state.motherboard = action.payload;
             return state; // Возвращаем обновленное состояние
@@ -93,7 +98,7 @@ export const motherBoardCompatibilitySlice = createSlice({
             .addCase(chooseMotherboard.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
                 const data = action.payload;
                 state.motherboard = data.motherboard;
-        })
+            })
             .addCase(chooseProcessor.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
                 const data = action.payload;
                 state.processor = data.processor;

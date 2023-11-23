@@ -14,7 +14,7 @@ export type Processor = {
     max_memory_frequency:string,
     core:string,
     cache_capacity:CacheCapacity,
-    integrated_videocard: IntegratedVideocard,
+    integratedvideocard: IntegratedVideocard,
     TDP:string,
     status:string|null
 }

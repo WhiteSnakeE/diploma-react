@@ -2,6 +2,12 @@ import {MotherboardApi, useGetAllMotherBoardsQuery} from "../../api/motherboardA
 import React, {useContext, useEffect, useState} from "react";
 import {useAppDispatch} from "../../api/store";
 import {ComputerContext} from "../../context/ComputerConfigurationContext";
+import {
+    chooseMotherboard,
+    chooseProcessor,
+    chooseRam,
+    motherBoardCompatibilitySlice
+} from "../../api/slices/componentsSlice";
 
 
 
@@ -29,9 +35,28 @@ export const MotherboardDropDown: React.FC = () => {
         console.log(selectedIndex);
         const selectedObject = motherboards?.find(motherboard => motherboard.name === selectedIndex);
         if (selectedObject) {
-            setIsOpen(!isOpen);
-            setSelectedValue(selectedIndex);
+            dispatch(motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject));
             motherboardContext?.setMotherboard(selectedObject)
+            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
+                {
+                    motherboard: motherboardContext?.motherboard,
+                    processor: motherboardContext?.processor,
+                    ram: motherboardContext?.ram
+
+                }, // initialState будет автоматически взято из редуктора
+                motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject)
+            );
+
+            console.log(updatedConfiguration);
+
+            // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
+            const result = await dispatch(chooseMotherboard(updatedConfiguration)).unwrap();
+
+            setIsOpen(!isOpen);
+            if (result.motherboard?.status) {
+                setAnswer(result.motherboard.status);
+            }
+            setSelectedValue(selectedIndex);
         }
     };
 
