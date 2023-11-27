@@ -10,13 +10,15 @@ import {
 } from "../../api/slices/componentsSlice";
 import {useAppDispatch} from "../../api/store";
 import {ComputerContext} from "../../context/ComputerConfigurationContext";
+import {StatusComponent} from "../Status/StatusComponent";
+import {ComputerConfiguration} from "../../api/types/ComputerConfiguration";
 
 export const ProcessorDropDown = () => {
     const {data: processors, error, isLoading} = ProcessorsApi.useGetAllProcessorsQuery();
     const [isOpen, setIsOpen] = useState(false);
     const motherboardContext = useContext(ComputerContext)
-    const [componentList, setComponentList] = useState([]);
-    const [answer, setAnswer] = useState("Everything is okay");
+    const [configuration,setConfiguration] = useState<ComputerConfiguration>()
+
     const [selectedValue, setSelectedValue] = useState("");
     const dispatch = useAppDispatch();
 
@@ -30,9 +32,7 @@ export const ProcessorDropDown = () => {
 
 
     const toggleDropdown = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(motherboardContext?.processor)
         const selectedIndex = event.target.value;
-        console.log(selectedIndex);
         const selectedObject = processors?.find(processor => processor.name === selectedIndex);
         if (selectedObject) {
             dispatch(motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject));
@@ -47,15 +47,13 @@ export const ProcessorDropDown = () => {
                 motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject)
             );
 
-            console.log(updatedConfiguration);
-
-            // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
             const result = await dispatch(chooseProcessor(updatedConfiguration)).unwrap();
-
+            setConfiguration(result)
+            motherboardContext?.setProcessor(result.processor)
+            console.log(result.motherboard?.status)
+            console.log(result.processor?.status)
+            console.log(result)
             setIsOpen(!isOpen);
-            if (result.processor?.status) {
-                setAnswer(result.processor.status);
-            }
             setSelectedValue(selectedIndex);
         }
     };
@@ -72,7 +70,7 @@ export const ProcessorDropDown = () => {
                     ))}
                 </select>
                 <div>
-                    {answer}
+                    <StatusComponent configuration={configuration}/>
                 </div>
             </div>
         </div>

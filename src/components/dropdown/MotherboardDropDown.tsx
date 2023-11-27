@@ -8,6 +8,8 @@ import {
     chooseRam,
     motherBoardCompatibilitySlice
 } from "../../api/slices/componentsSlice";
+import {StatusComponent} from "../Status/StatusComponent";
+import {ComputerConfiguration} from "../../api/types/ComputerConfiguration";
 
 
 
@@ -15,8 +17,8 @@ import {
 export const MotherboardDropDown: React.FC = () => {
     const {data: motherboards, error, isLoading} = MotherboardApi.useGetAllMotherBoardsQuery();
     const [isOpen, setIsOpen] = useState(false);
+    const [configuration,setConfiguration] = useState<ComputerConfiguration>()
     const motherboardContext = useContext(ComputerContext)
-    const [answer, setAnswer] = useState("Everything is okay");
     const [selectedValue, setSelectedValue] = useState("");
     const dispatch = useAppDispatch();
 
@@ -30,9 +32,7 @@ export const MotherboardDropDown: React.FC = () => {
 
 
     const toggleDropdown = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(motherboardContext?.motherboard)
         const selectedIndex = event.target.value;
-        console.log(selectedIndex);
         const selectedObject = motherboards?.find(motherboard => motherboard.name === selectedIndex);
         if (selectedObject) {
             dispatch(motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject));
@@ -47,15 +47,14 @@ export const MotherboardDropDown: React.FC = () => {
                 motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject)
             );
 
-            console.log(updatedConfiguration);
-
             // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
             const result = await dispatch(chooseMotherboard(updatedConfiguration)).unwrap();
-
+            setConfiguration(result)
+            motherboardContext?.setMotherboard(result.motherboard)
+            console.log(result.motherboard?.status)
+            console.log(result.processor?.status)
+            console.log(result)
             setIsOpen(!isOpen);
-            if (result.motherboard?.status) {
-                setAnswer(result.motherboard.status);
-            }
             setSelectedValue(selectedIndex);
         }
     };
@@ -73,7 +72,7 @@ export const MotherboardDropDown: React.FC = () => {
                     ))}
                 </select>
                 <div>
-                    {answer}
+                    <StatusComponent configuration={configuration}/>
                 </div>
             </div>
 

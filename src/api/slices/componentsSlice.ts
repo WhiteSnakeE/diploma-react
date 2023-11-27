@@ -12,7 +12,6 @@ export const chooseMotherboard = createAsyncThunk<ComputerConfiguration, Compute
     'check/motherboards',
     async (motherboard, {dispatch}) => {
         try {
-            console.log(motherboard)
             const response = await axios.post<ComputerConfiguration>(
                 `${process.env.REACT_APP_BACKEND}/check/motherboards`,
                 motherboard
