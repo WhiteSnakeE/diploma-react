@@ -6,56 +6,18 @@ import {Processor} from "../types/processor/Processor";
 import {Ram} from "../types/ram/Ram";
 
 
-export const chooseMotherboard = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
-    dispatch: AppDispatch
-}>(
-    'check/motherboards',
-    async (motherboard, {dispatch}) => {
+export const chooseConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, { dispatch: AppDispatch }>(
+    'check/configuration',
+    async (configuration, { dispatch }) => {
         try {
             const response = await axios.post<ComputerConfiguration>(
-                `${process.env.REACT_APP_BACKEND}/check/motherboards`,
-                motherboard
+                `${process.env.REACT_APP_BACKEND}/check/compatibility`,
+                configuration
             );
             return response.data;
         } catch (error) {
-            console.error('Error while checking motherboards:', error);
-            throw error; // Пробрасываем ошибку дальше
-        }
-    }
-);
-
-export const chooseProcessor = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
-    dispatch: AppDispatch
-}>(
-    'check/processors',
-    async (processor, {dispatch}) => {
-        try {
-
-            const response = await axios.post<ComputerConfiguration>(
-                `${process.env.REACT_APP_BACKEND}/check/processors`,
-                processor
-            );
-            return response.data;
-        } catch (error) {
-            console.error('Error while checking processors:', error);
-            throw error; // Пробрасываем ошибку дальше
-        }
-    }
-);
-
-export const chooseRam = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, { dispatch: AppDispatch }>(
-    'check/rams',
-    async (ram, {dispatch}) => {
-        try {
-
-            const response = await axios.post<ComputerConfiguration>(
-                `${process.env.REACT_APP_BACKEND}/check/rams`,
-                ram
-            );
-            return response.data;
-        } catch (error) {
-            console.error('Error while checking rams:', error);
-            throw error; // Пробрасываем ошибку дальше
+            console.error('Error while checking configuration:', error);
+            throw error;
         }
     }
 );
@@ -72,7 +34,7 @@ const initialState: ComputerConfiguration = {
     ram: null,
 };
 
-export const motherBoardCompatibilitySlice = createSlice({
+export const configurationCompatibilitySlice = createSlice({
     name: 'motherBoardCompatibility',
     initialState,
     reducers: {
@@ -93,18 +55,12 @@ export const motherBoardCompatibilitySlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(chooseMotherboard.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
-                const data = action.payload;
-                state.motherboard = data.motherboard;
-            })
-            .addCase(chooseProcessor.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
-                const data = action.payload;
-                state.processor = data.processor;
-            })
-            .addCase(chooseRam.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
-                const data = action.payload;
-                state.ram = data.ram;
-            });
+        builder.addCase(chooseConfiguration.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
+            // Update the state with the fulfilled action payload
+            const data = action.payload;
+            state.motherboard = data.motherboard;
+            state.processor = data.processor;
+            state.ram = data.ram;
+        });
     },
 });

@@ -3,10 +3,8 @@ import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {ProcessorsApi, useGetAllProcessorsQuery} from "../../api/proccessorsApi";
 import {
-    chooseMotherboard,
-    chooseProcessor,
-    chooseRam,
-    motherBoardCompatibilitySlice
+    chooseConfiguration, configurationCompatibilitySlice,
+
 } from "../../api/slices/componentsSlice";
 import {useAppDispatch} from "../../api/store";
 import {ComputerContext} from "../../context/ComputerConfigurationContext";
@@ -17,8 +15,7 @@ export const ProcessorDropDown = () => {
     const {data: processors, error, isLoading} = ProcessorsApi.useGetAllProcessorsQuery();
     const [isOpen, setIsOpen] = useState(false);
     const motherboardContext = useContext(ComputerContext)
-    const [configuration,setConfiguration] = useState<ComputerConfiguration>()
-
+    const [configuration, setConfiguration] = useState<ComputerConfiguration>()
     const [selectedValue, setSelectedValue] = useState("");
     const dispatch = useAppDispatch();
 
@@ -35,21 +32,22 @@ export const ProcessorDropDown = () => {
         const selectedIndex = event.target.value;
         const selectedObject = processors?.find(processor => processor.name === selectedIndex);
         if (selectedObject) {
-            dispatch(motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject));
+            dispatch(configurationCompatibilitySlice.actions.addProcessorStatus(selectedObject));
             motherboardContext?.setProcessor(selectedObject)
-            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
+            const updatedConfiguration = configurationCompatibilitySlice.reducer(
                 {
                     motherboard: motherboardContext?.motherboard,
                     processor: motherboardContext?.processor,
                     ram: motherboardContext?.ram
 
                 }, // initialState будет автоматически взято из редуктора
-                motherBoardCompatibilitySlice.actions.addProcessorStatus(selectedObject)
+                configurationCompatibilitySlice.actions.addProcessorStatus(selectedObject)
             );
 
-            const result = await dispatch(chooseProcessor(updatedConfiguration)).unwrap();
+            const result = await dispatch(chooseConfiguration(updatedConfiguration)).unwrap();
             setConfiguration(result)
             motherboardContext?.setProcessor(result.processor)
+            motherboardContext?.setMotherboard(result.motherboard)
             console.log(result.motherboard?.status)
             console.log(result.processor?.status)
             console.log(result)
@@ -70,7 +68,7 @@ export const ProcessorDropDown = () => {
                     ))}
                 </select>
                 <div>
-                    <StatusComponent configuration={configuration}/>
+                    {motherboardContext?.processor?.status}
                 </div>
             </div>
         </div>

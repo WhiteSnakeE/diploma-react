@@ -2,14 +2,9 @@ import {MotherboardApi, useGetAllMotherBoardsQuery} from "../../api/motherboardA
 import React, {useContext, useEffect, useState} from "react";
 import {useAppDispatch} from "../../api/store";
 import {ComputerContext} from "../../context/ComputerConfigurationContext";
-import {
-    chooseMotherboard,
-    chooseProcessor,
-    chooseRam,
-    motherBoardCompatibilitySlice
-} from "../../api/slices/componentsSlice";
 import {StatusComponent} from "../Status/StatusComponent";
 import {ComputerConfiguration} from "../../api/types/ComputerConfiguration";
+import {chooseConfiguration, configurationCompatibilitySlice} from "../../api/slices/componentsSlice";
 
 
 
@@ -35,21 +30,22 @@ export const MotherboardDropDown: React.FC = () => {
         const selectedIndex = event.target.value;
         const selectedObject = motherboards?.find(motherboard => motherboard.name === selectedIndex);
         if (selectedObject) {
-            dispatch(motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject));
+            dispatch(configurationCompatibilitySlice.actions.addMotherboardStatus(selectedObject));
             motherboardContext?.setMotherboard(selectedObject)
-            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
+            const updatedConfiguration = configurationCompatibilitySlice.reducer(
                 {
                     motherboard: motherboardContext?.motherboard,
                     processor: motherboardContext?.processor,
                     ram: motherboardContext?.ram
 
                 }, // initialState будет автоматически взято из редуктора
-                motherBoardCompatibilitySlice.actions.addMotherboardStatus(selectedObject)
+                configurationCompatibilitySlice.actions.addMotherboardStatus(selectedObject)
             );
 
             // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
-            const result = await dispatch(chooseMotherboard(updatedConfiguration)).unwrap();
+            const result = await dispatch(chooseConfiguration(updatedConfiguration)).unwrap();
             setConfiguration(result)
+            motherboardContext?.setProcessor(result.processor)
             motherboardContext?.setMotherboard(result.motherboard)
             console.log(result.motherboard?.status)
             console.log(result.processor?.status)
@@ -72,7 +68,7 @@ export const MotherboardDropDown: React.FC = () => {
                     ))}
                 </select>
                 <div>
-                    <StatusComponent configuration={configuration}/>
+                    {motherboardContext?.motherboard?.status}
                 </div>
             </div>
 

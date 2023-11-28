@@ -3,14 +3,9 @@ import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {RamApi, useGetAllRamsQuery} from "../../api/ramApi";
 import {useAppDispatch} from "../../api/store";
-import {
-    chooseMotherboard,
-    chooseProcessor,
-    chooseRam,
-    motherBoardCompatibilitySlice
-} from "../../api/slices/componentsSlice";
 import {ComputerContext} from "../../context/ComputerConfigurationContext";
 import {ComputerConfiguration} from "../../api/types/ComputerConfiguration";
+import {chooseConfiguration, configurationCompatibilitySlice} from "../../api/slices/componentsSlice";
 
 export const RamDropDown = () => {
     const {data: rams, error, isLoading} = useGetAllRamsQuery();
@@ -34,22 +29,22 @@ export const RamDropDown = () => {
         const selectedIndex = event.target.value;
         const selectedObject = rams?.find(ram => ram.name === selectedIndex);
         if (selectedObject) {
-            dispatch(motherBoardCompatibilitySlice.actions.addRamStatus(selectedObject));
+            dispatch(configurationCompatibilitySlice.actions.addRamStatus(selectedObject));
             motherboardContext?.setRam(selectedObject)
-            const updatedConfiguration = motherBoardCompatibilitySlice.reducer(
+            const updatedConfiguration = configurationCompatibilitySlice.reducer(
                  {
                     motherboard: motherboardContext?.motherboard,
                     processor: motherboardContext?.processor,
                     ram: motherboardContext?.ram
 
                 }, // initialState будет автоматически взято из редуктора
-                motherBoardCompatibilitySlice.actions.addRamStatus(selectedObject)
+                configurationCompatibilitySlice.actions.addRamStatus(selectedObject)
             );
 
             console.log(updatedConfiguration);
 
             // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
-            const result = await dispatch(chooseRam(updatedConfiguration)).unwrap();
+            const result = await dispatch(chooseConfiguration(updatedConfiguration)).unwrap();
 
             setIsOpen(!isOpen);
             if (result.ram?.status) {
@@ -70,6 +65,7 @@ export const RamDropDown = () => {
                         </option>
                     ))}
                 </select>
+
             </div>
         </div>
 
