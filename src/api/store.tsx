@@ -3,12 +3,14 @@ import {useDispatch} from "react-redux";
 import {ProcessorsApi} from "./proccessorsApi";
 import {MotherboardApi} from "./motherboardApi";
 import {RamApi} from "./ramApi";
+import {configurationCompatibilitySlice} from "./slices/componentsSlice";
 
 export const store = configureStore({
     reducer: {
         [ProcessorsApi.reducerPath]: ProcessorsApi.reducer,
         [MotherboardApi.reducerPath]: MotherboardApi.reducer,
         [RamApi.reducerPath]: RamApi.reducer,
+        [configurationCompatibilitySlice.name]: configurationCompatibilitySlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(ProcessorsApi.middleware).concat(MotherboardApi.middleware).concat(RamApi.middleware),

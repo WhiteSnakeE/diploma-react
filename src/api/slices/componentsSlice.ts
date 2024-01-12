@@ -6,7 +6,7 @@ import {Processor} from "../types/processor/Processor";
 import {Ram} from "../types/ram/Ram";
 
 
-export const chooseConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, { dispatch: AppDispatch }>(
+export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, { dispatch: AppDispatch }>(
     'check/configuration',
     async (configuration, { dispatch }) => {
         try {
@@ -35,27 +35,24 @@ const initialState: ComputerConfiguration = {
 };
 
 export const configurationCompatibilitySlice = createSlice({
-    name: 'motherBoardCompatibility',
+    name: 'configurationCompatibility',
     initialState,
     reducers: {
-        addMotherboardStatus: (state, action: PayloadAction<Motherboard>) => {
-            // Обновляем информацию о материнской плате в состоянии
+        setMotherboard: (state, action: PayloadAction<Motherboard>) => {
             state.motherboard = action.payload;
-            return state; // Возвращаем обновленное состояние
+            return state;
         },
-        addProcessorStatus: (state, action: PayloadAction<Processor>) => {
-            // Обновляем информацию о материнской плате в состоянии
+        setProcessor: (state, action: PayloadAction<Processor>) => {
             state.processor = action.payload;
-            return state; // Возвращаем обновленное состояние
+            return state;
         },
-        addRamStatus: (state, action: PayloadAction<Ram>) => {
-            // Обновляем информацию о материнской плате в состоянии
+        setRam: (state, action: PayloadAction<Ram>) => {
             state.ram = action.payload;
-            return state; // Возвращаем обновленное состояние
+            return state;
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(chooseConfiguration.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
+        builder.addCase(updateConfiguration.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
             // Update the state with the fulfilled action payload
             const data = action.payload;
             state.motherboard = data.motherboard;

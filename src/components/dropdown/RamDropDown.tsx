@@ -1,19 +1,14 @@
-
-import React, {useContext, useEffect, useState} from "react";
-import axios from "axios";
-import {RamApi, useGetAllRamsQuery} from "../../api/ramApi";
-import {useAppDispatch} from "../../api/store";
-import {ComputerContext} from "../../context/ComputerConfigurationContext";
-import {ComputerConfiguration} from "../../api/types/ComputerConfiguration";
-import {chooseConfiguration, configurationCompatibilitySlice} from "../../api/slices/componentsSlice";
+import React, {useState} from "react";
+import {useGetAllRamsQuery} from "../../api/ramApi";
+import {RootState, useAppDispatch} from "../../api/store";
+import {updateConfiguration} from "../../api/slices/componentsSlice";
+import {useSelector} from "react-redux";
 
 export const RamDropDown = () => {
     const {data: rams, error, isLoading} = useGetAllRamsQuery();
     const [isOpen, setIsOpen] = useState(false);
-    const motherboardContext = useContext(ComputerContext)
-    const [componentList, setComponentList] = useState([]);
-    const [isOkay, setIsOkay] = useState(false);
-    const [answer, setAnswer] = useState("Everything is okay");
+    const ram = useSelector((state:RootState) => state.configurationCompatibility.ram);
+    const configuration = useSelector((state:RootState) => state.configurationCompatibility);
     const [selectedValue, setSelectedValue] = useState("");
     const dispatch = useAppDispatch();
     if (isLoading) {
@@ -29,27 +24,12 @@ export const RamDropDown = () => {
         const selectedIndex = event.target.value;
         const selectedObject = rams?.find(ram => ram.name === selectedIndex);
         if (selectedObject) {
-            dispatch(configurationCompatibilitySlice.actions.addRamStatus(selectedObject));
-            motherboardContext?.setRam(selectedObject)
-            const updatedConfiguration = configurationCompatibilitySlice.reducer(
-                 {
-                    motherboard: motherboardContext?.motherboard,
-                    processor: motherboardContext?.processor,
-                    ram: motherboardContext?.ram
-
-                }, // initialState будет автоматически взято из редуктора
-                configurationCompatibilitySlice.actions.addRamStatus(selectedObject)
-            );
-
-            console.log(updatedConfiguration);
-
-            // Можно также использовать updatedConfiguration для отправки по chooseMotherboard
-            const result = await dispatch(chooseConfiguration(updatedConfiguration)).unwrap();
-
-            setIsOpen(!isOpen);
-            if (result.ram?.status) {
-                setAnswer(result.ram.status);
+            const updatedConfig = {
+                ...configuration,
+                ram: selectedObject
             }
+            dispatch(updateConfiguration(updatedConfig))
+            setIsOpen(!isOpen);
             setSelectedValue(selectedIndex);
         }
     };
@@ -65,7 +45,9 @@ export const RamDropDown = () => {
                         </option>
                     ))}
                 </select>
-
+                <div>
+                    {ram?.status}
+                </div>
             </div>
         </div>
 
@@ -74,12 +56,3 @@ export const RamDropDown = () => {
 };
 
 
-// console.log(motherboardContext?.ram)
-// const selectedIndex = event.target.value;
-// console.log(selectedIndex);
-// const selectedObject = rams?.find(ram => ram.name === selectedIndex);
-// if (selectedObject) {
-//     setIsOpen(!isOpen);
-//     setSelectedValue(selectedIndex);
-//     motherboardContext?.setRam(selectedObject)
-// }
