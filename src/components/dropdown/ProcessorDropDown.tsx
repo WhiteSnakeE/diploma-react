@@ -3,18 +3,19 @@ import {ProcessorsApi} from "../../api/proccessorsApi";
 import {updateConfiguration,} from "../../api/slices/componentsSlice";
 import {RootState, useAppDispatch} from "../../api/store";
 import {useSelector} from "react-redux";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {Processor} from "../../api/types/processor/Processor";
 
 export const ProcessorDropDown = () => {
     const {data: processors, error, isLoading} = ProcessorsApi.useGetAllProcessorsQuery();
     const [isOpen, setIsOpen] = useState(false);
-    const processor = useSelector((state:RootState) => state.configurationCompatibility.processor);
-    const configuration = useSelector((state:RootState) => state.configurationCompatibility);
-    const [selectedValue, setSelectedValue] = useState("");
+    const processor = useSelector((state: RootState) => state.configurationCompatibility.processor);
+    const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch();
 
-    const toggleDropdown = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedIndex = event.target.value;
-        const selectedObject = processors?.find(processor => processor.name === selectedIndex);
+    const toggleDropdown = async (selectedValue:Processor) => {
+        const selectedIndex = selectedValue;
+        const selectedObject = processors?.find(processor => processor === selectedIndex);
         if (selectedObject) {
             const updatedConfig = {
                 ...configuration,
@@ -22,24 +23,28 @@ export const ProcessorDropDown = () => {
             }
             dispatch(updateConfiguration(updatedConfig))
             setIsOpen(!isOpen);
-            setSelectedValue(selectedIndex);
         }
     };
 
     return (
         <div>
-            <div>
-                <select  className="text"  onChange={toggleDropdown} value={selectedValue}>
-                    {!selectedValue && <option value="" disabled hidden>Choose the element</option>}
+            <Accordion>
+                <AccordionSummary
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                >
+                    {processor?.name == null ? "Choose the element" : processor.name}
+                </AccordionSummary>
+                <AccordionDetails>
                     {processors?.map(item => (
-                        <option key={item._id}>
-                            {item.name}
-                        </option>
+                        <article key={item._id} onClick={() => toggleDropdown(item)} style={{cursor:"pointer"}}>
+                            <h3>{item.name}</h3>
+                        </article>
                     ))}
-                </select>
-                <div>
-                    {processor?.status}
-                </div>
+                </AccordionDetails>
+            </Accordion>
+            <div>
+                {processor?.status}
             </div>
         </div>
     );

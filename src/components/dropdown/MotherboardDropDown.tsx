@@ -3,17 +3,18 @@ import React, {useState} from "react";
 import {RootState, useAppDispatch} from "../../api/store";
 import {updateConfiguration} from "../../api/slices/componentsSlice";
 import {useSelector} from "react-redux";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {Motherboard} from "../../api/types/motherboard/Motherboard";
 
 export const MotherboardDropDown: React.FC = () => {
     const {data: motherboards, error, isLoading} = MotherboardApi.useGetAllMotherBoardsQuery();
     const [isOpen, setIsOpen] = useState(false);
     const motherboard = useSelector((state: RootState) => state.configurationCompatibility.motherboard);
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
-    const [selectedValue, setSelectedValue] = useState("");
     const dispatch = useAppDispatch()
-    const toggleDropdown = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedIndex = event.target.value;
-        const selectedObject = motherboards?.find(motherboard => motherboard.name === selectedIndex);
+    const toggleDropdown = async (selectedValue: Motherboard) => {
+        const selectedIndex = selectedValue;
+        const selectedObject = motherboards?.find(motherboard => motherboard === selectedIndex);
         if (selectedObject) {
             const updatedConfig = {
                 ...configuration,
@@ -21,27 +22,30 @@ export const MotherboardDropDown: React.FC = () => {
             }
             dispatch(updateConfiguration(updatedConfig))
             setIsOpen(!isOpen);
-            setSelectedValue(selectedIndex);
         }
     };
 
 
     return (
         <div>
-            <div>
-                <select className="text" onChange={toggleDropdown} value={selectedValue}>
-                    {!selectedValue && <option value="" disabled hidden>Choose the element</option>}
+            <Accordion>
+                <AccordionSummary
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                >
+                    {motherboard?.name == null ? "Choose the element" : motherboard.name}
+                </AccordionSummary>
+                <AccordionDetails>
                     {motherboards?.map(item => (
-                        <option key={item._id}>
-                            {item.name}
-                        </option>
+                        <article key={item._id} onClick={() => toggleDropdown(item)} style={{cursor: "pointer"}}>
+                            <h3>{item.name}</h3>
+                        </article>
                     ))}
-                </select>
-                <div>
-                    {motherboard?.status}
-                </div>
+                </AccordionDetails>
+            </Accordion>
+            <div>
+                {motherboard?.status}
             </div>
-
         </div>
     );
 };

@@ -1,0 +1,24 @@
+
+
+.cardContainer {
+    display: flex;
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cardImage {
+    width: 100px;
+    margin-right: auto;
+}
+
+.cardContent {
+    flex: 1;
+}
+
+.priceBox {
+    display: flex;
+    align-items: center;
+    padding-left: 1px;
+    padding-bottom: 1px;
+}
