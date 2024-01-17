@@ -14,7 +14,8 @@ export type Motherboard = {
     networkAndMultimedia: NetworkAndMultimedia | null,
     expansionSlots: ExpansionSlots | null,
     internalInterfaces: InternalInterfaces | null,
-    status: string | null
+    status: string | null,
+    img: string
 }
 
 

@@ -4,43 +4,47 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
+import '../componentCard/ComponentCard.css'
 
-const myImage = require('../../images/processors/650706fea848ec70df04ddc9.webp') as string;
+
 
 interface ComponentCardProps {
+    image: string,
     name: string,
-    img: string,
+    price: number,
 }
 
-export const ComponentCard: React.FC<ComponentCardProps> = ({name, img}) => {
+export const ComponentCard: React.FC<ComponentCardProps> = ({image ,name, price}) => {
+
+    console.log(image)
+    console.log(name)
+    console.log(price)
+
+    const myImage = require(`../../images/processors/${image}.webp`) as string;
 
     const theme = useTheme();
 
     return (
-        <Card sx={{display: 'flex'}}>
+        <Card className="card">
             <CardMedia
                 component="img"
-                sx={{width: 100, marginRight: 'auto'}}
+                sx={{ width: 100, marginRight: 'auto'}}
                 image={myImage}
                 alt="Live from space album cover"
             />
-            <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                <CardContent sx={{flex: '1 0 auto'}}>
-                    <Typography component="div" variant="h5">
-                        Купите процесоор (пожалуйста)
+            <Box className="content">
+                <CardContent className="content-text">
+                    <Typography variant="h6">
+                       Процессор {name}
                     </Typography>
-                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                        Вот он справа ай 9 кор анлокед ваще супмер
-                    </Typography>
+                    {/*<Typography variant="subtitle1" color="text.secondary">*/}
+                    {/*    Вот он справа ай 9 кор анлокед ваще супмер*/}
+                    {/*</Typography>*/}
                 </CardContent>
-            </Box>
-            <Box sx={{display: 'flex', alignItems: 'center', pl: 1, pb: 1}}>
-                Цена вопроса:2 баночки пива
+                <Box className="footer">
+                    Цена вопроса: {price}
+                </Box>
             </Box>
         </Card>
     );

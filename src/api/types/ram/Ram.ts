@@ -9,6 +9,7 @@ export type Ram = {
     modules_count:string,
     frequency:string,
     taimings:string,
-    supply_voltage:string
-    status: string | null
+    supply_voltage:string,
+    status: string | null,
+    img: string | null
 }

@@ -17,7 +17,6 @@ function App() {
                   <RamDropDown/>
               </div>
           </ComputerContextProvider>
-          <ComponentCard name={""} img={""}/>
           <div>
           </div>
           <div>

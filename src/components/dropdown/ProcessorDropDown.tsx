@@ -5,6 +5,7 @@ import {RootState, useAppDispatch} from "../../api/store";
 import {useSelector} from "react-redux";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import {Processor} from "../../api/types/processor/Processor";
+import {ComponentCard} from "../componentCard/ComponentCard";
 
 export const ProcessorDropDown = () => {
     const {data: processors, error, isLoading} = ProcessorsApi.useGetAllProcessorsQuery();
@@ -33,12 +34,13 @@ export const ProcessorDropDown = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    {processor?.name == null ? "Choose the element" : processor.name}
+                    {processor?.name == null ? "Choose the element" :
+                        <ComponentCard image={processor.img} name={processor.name} price={processor.price} /> }
                 </AccordionSummary>
                 <AccordionDetails>
                     {processors?.map(item => (
                         <article key={item._id} onClick={() => toggleDropdown(item)} style={{cursor:"pointer"}}>
-                            <h3>{item.name}</h3>
+                            <ComponentCard image={item.img} name={item.name} price={item.price} />
                         </article>
                     ))}
                 </AccordionDetails>

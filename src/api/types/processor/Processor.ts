@@ -16,5 +16,6 @@ export type Processor = {
     cache_capacity:CacheCapacity,
     integratedvideocard: IntegratedVideocard,
     TDP:string,
-    status:string|null
+    status:string|null,
+    img: string
 }
