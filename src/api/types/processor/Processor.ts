@@ -3,19 +3,19 @@ import {CacheCapacity} from "./CacheCapacity";
 import {IntegratedVideocard} from "./IntegratedVideocard";
 
 export type Processor = {
-    _id:string,
-    name:string,
-    price:number,
-    socket:string,
-    core_frequency:CoreFrequency,
+    _id: string,
+    name: string,
+    price: number,
+    socket: string,
+    core_frequency: CoreFrequency,
     number_of_cores: number,
-    number_of_threads:number,
-    memory_type:string[],
-    max_memory_frequency:string,
-    core:string,
-    cache_capacity:CacheCapacity,
+    number_of_threads: number,
+    memory_type: string[],
+    max_memory_frequency: string,
+    core: string,
+    cache_capacity: CacheCapacity,
     integratedvideocard: IntegratedVideocard,
-    TDP:string,
-    status:string|null,
+    TDP: string,
+    status: string | null,
     img: string
 }

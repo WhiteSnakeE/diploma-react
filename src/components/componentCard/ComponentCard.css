@@ -1,28 +1,39 @@
-.card {
-    display: flex;
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-}
 
-.media {
-    width: 100px;
-    margin-right: auto;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.content-text {
-    flex: 1 0 auto;
-}
-
-.footer {
+.product-card {
+    font-family: 'Open Sans', sans-serif;
     display: flex;
     align-items: center;
-    padding-left: 1rem;
-    padding-bottom: 1rem;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.image {
+    padding-right: 40px;
+    text-align: center;
+}
+
+.product-card img {
+    width: 80px;
+    height: auto;
+}
+
+.name {
+    font-size: 14px;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.add-to-cart {
+    display: flex;
+    margin-left: auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.add-to-cart .primary-button {
+    width: 150px;
+    height: 40px;
 }

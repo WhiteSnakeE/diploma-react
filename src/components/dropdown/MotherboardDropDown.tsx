@@ -5,6 +5,7 @@ import {updateConfiguration} from "../../api/slices/componentsSlice";
 import {useSelector} from "react-redux";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import {Motherboard} from "../../api/types/motherboard/Motherboard";
+import "./Dropdown.css";
 
 export const MotherboardDropDown: React.FC = () => {
     const {data: motherboards, error, isLoading} = MotherboardApi.useGetAllMotherBoardsQuery();
@@ -37,7 +38,7 @@ export const MotherboardDropDown: React.FC = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     {motherboards?.map(item => (
-                        <article key={item._id} onClick={() => toggleDropdown(item)} style={{cursor: "pointer"}}>
+                        <article  key={item._id} onClick={() => toggleDropdown(item)} style={{cursor: "pointer"}}>
                             <h3>{item.name}</h3>
                         </article>
                     ))}

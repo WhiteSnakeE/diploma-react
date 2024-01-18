@@ -1,0 +1,125 @@
+.primary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primary-button .text {
+    line-height: 20px;
+}
+
+.primary-button .icon-container {
+    margin-right: 6px;
+    width: 20px;
+    height: 20px;
+}
+
+/* == RED BUTTON == */
+
+.primary-button.red {
+    background-color: #fe6868;
+    color: #ffffff;
+}
+
+.primary-button.red:hover {
+    background-color: #fe4c4c;
+}
+
+.primary-button.red:active {
+    background-color: #fe3333;
+}
+
+.primary-button.red.disabled {
+    background-color: #fecccc;
+    cursor: not-allowed;
+}
+
+.primary-button.red .icon-container {
+    --accent-color: #ffffff;
+}
+
+/* == BLUE BUTTON == */
+
+.primary-button.blue {
+    background-color: #0039a6;
+    color: #ffffff;
+}
+
+.primary-button.blue:hover {
+    background-color: #00308F;
+}
+
+.primary-button.blue:active {
+    background-color: #002D62;
+}
+
+.primary-button.blue.disabled {
+    background-color: #7CB9E8;
+    cursor: not-allowed;
+}
+
+.primary-button.blue .icon-container {
+    --accent-color: #ffffff;
+}
+
+/* == GREEN BUTTON == */
+
+.primary-button.green {
+    background-color: #3e7e6c;
+    color: #ffffff;
+}
+
+.primary-button.green:hover {
+    background-color: #387463;
+}
+
+.primary-button.green:active {
+    background-color: #326657;
+}
+
+.primary-button.green.disabled {
+    background-color: #98ccbd;
+    cursor: not-allowed;
+}
+
+.primary-button.green .icon-container {
+    --accent-color: #ffffff;
+}
+
+/* == WHITE BUTTON == */
+
+.primary-button.white {
+    background-color: #ffffff;
+    color: #3e7e6c;
+}
+
+.primary-button.white:hover {
+    background-color: #f7fafc;
+}
+
+.primary-button.white:active {
+    background-color: #f1f6fa;
+}
+
+.primary-button.white.disabled {
+    background-color: #ffffff;
+    color: #d7d5db;
+    cursor: not-allowed;
+}
+
+.primary-button.white .icon-container {
+    --accent-color: #3e7e6c;
+}
+
+.primary-button.white.disabled .icon-container {
+    --accent-color: #d7d5db;
+}

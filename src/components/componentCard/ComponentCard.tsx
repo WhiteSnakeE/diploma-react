@@ -1,21 +1,19 @@
 import * as React from 'react';
 import {useTheme} from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import '../componentCard/ComponentCard.css'
-
+import {PrimaryButton} from "../Buttons/PrimaryButton";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {CheckCompatibilityMessage} from "../checkCompatibilityMessage/CheckCompatibilityMessage";
 
 
 interface ComponentCardProps {
     image: string,
     name: string,
     price: number,
+    isShowButton: boolean,
 }
 
-export const ComponentCard: React.FC<ComponentCardProps> = ({image ,name, price}) => {
+export const ComponentCard: React.FC<ComponentCardProps> = ({image, name, price, isShowButton}) => {
 
     console.log(image)
     console.log(name)
@@ -26,26 +24,19 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({image ,name, price}
     const theme = useTheme();
 
     return (
-        <Card className="card">
-            <CardMedia
-                component="img"
-                sx={{ width: 100, marginRight: 'auto'}}
-                image={myImage}
-                alt="Live from space album cover"
-            />
-            <Box className="content">
-                <CardContent className="content-text">
-                    <Typography variant="h6">
-                       Процессор {name}
-                    </Typography>
-                    {/*<Typography variant="subtitle1" color="text.secondary">*/}
-                    {/*    Вот он справа ай 9 кор анлокед ваще супмер*/}
-                    {/*</Typography>*/}
-                </CardContent>
-                <Box className="footer">
-                    Цена вопроса: {price}
-                </Box>
-            </Box>
-        </Card>
+        <div className="product-card">
+            <div className="image">
+                <img src={myImage} alt="Product"/>
+            </div>
+            <div className="name">{name}</div>
+
+            {isShowButton &&
+                <div className="add-to-cart">
+                    <div className="price">{price} грн</div>
+                    <PrimaryButton text="Select this item" color="blue" label="select this item" disabled={false}/>
+                </div>
+            }
+
+        </div>
     );
 }
