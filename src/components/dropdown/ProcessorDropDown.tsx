@@ -8,6 +8,9 @@ import {Processor} from "../../api/types/processor/Processor";
 import {ComponentCard} from "../componentCard/ComponentCard";
 import "./Dropdown.css"
 import {CheckCompatibilityMessage} from "../checkCompatibilityMessage/CheckCompatibilityMessage";
+import {ApproveIcon} from "../icons/ApproveIcon";
+import {ErrorIcon} from "../icons/ErrorIcon";
+import {QuestionIcon} from "../icons/QuestionIcon";
 
 export const ProcessorDropDown = () => {
     const {data: processors, error, isLoading} = ProcessorsApi.useGetAllProcessorsQuery();
@@ -39,9 +42,12 @@ export const ProcessorDropDown = () => {
                     {processor?.name == null ? "Choose the element" :
                         <ComponentCard image={processor.img} name={processor.name} price={processor.price}
                                        isShowButton={false}/>}
-                    {processor?.status != null &&
-                        <CheckCompatibilityMessage isApprove={true} message={processor.status}/>
+                    {processor?.status == null ?
+                        <CheckCompatibilityMessage icon={<QuestionIcon/>}/> :
+                        processor?.status == "" ? <CheckCompatibilityMessage icon={<ApproveIcon/>}/> :
+                            <CheckCompatibilityMessage icon={<ErrorIcon/>} message={processor.status}/>
                     }
+
                 </AccordionSummary>
                 <AccordionDetails>
                     <ul>
