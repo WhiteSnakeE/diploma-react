@@ -1,9 +1,6 @@
 import * as React from 'react';
-import {useTheme} from '@mui/material/styles';
 import '../componentCard/ComponentCard.css'
 import {PrimaryButton} from "../Buttons/PrimaryButton";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {CheckCompatibilityMessage} from "../checkCompatibilityMessage/CheckCompatibilityMessage";
 
 
 interface ComponentCardProps {
@@ -15,13 +12,8 @@ interface ComponentCardProps {
 
 export const ComponentCard: React.FC<ComponentCardProps> = ({image, name, price, isShowButton}) => {
 
-    console.log(image)
-    console.log(name)
-    console.log(price)
-
     const myImage = require(`../../images/processors/${image}.webp`) as string;
 
-    const theme = useTheme();
 
     return (
         <div className="product-card">

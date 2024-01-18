@@ -1,14 +1,20 @@
-
 .product-card {
     font-family: 'Open Sans', sans-serif;
     display: flex;
     align-items: center;
     font-weight: 700;
     font-size: 14px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 1000px;
+    z-index: 1;
+    position: relative;
 }
 
 .image {
-    padding-right: 40px;
+    padding-right: 20px; /* Уменьшено значение для примера */
     text-align: center;
 }
 
@@ -19,18 +25,19 @@
 
 .name {
     font-size: 14px;
+    padding-right: 100px;
+    flex-grow: 1;
+}
+
+.add-to-cart {
+    display: flex;
+    gap: 12px; /* Отступ между ценой и кнопкой */
+    align-items: center;
 }
 
 .price {
     font-weight: bold;
     font-size: 18px;
-}
-
-.add-to-cart {
-    display: flex;
-    margin-left: auto;
-    gap: 12px;
-    align-items: center;
 }
 
 .add-to-cart .primary-button {

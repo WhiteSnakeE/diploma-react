@@ -42,15 +42,16 @@ export const ProcessorDropDown = () => {
                     {processor?.name == null ? "Choose the element" :
                         <ComponentCard image={processor.img} name={processor.name} price={processor.price}
                                        isShowButton={false}/>}
-                    {processor?.status == null ?
-                        <CheckCompatibilityMessage icon={<QuestionIcon/>}/> :
-                        processor?.status == "" ? <CheckCompatibilityMessage icon={<ApproveIcon/>}/> :
-                            <CheckCompatibilityMessage icon={<ErrorIcon/>} message={processor.status}/>
-                    }
-
+                    <div className="check-icon">
+                        {processor?.status == null ?
+                            <CheckCompatibilityMessage icon={<QuestionIcon/>}/> :
+                            processor?.status == "" ? <CheckCompatibilityMessage icon={<ApproveIcon/>}/> :
+                                <CheckCompatibilityMessage icon={<ErrorIcon/>} message={processor.status}/>
+                        }
+                    </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <ul>
+                    <ul className="component-cards">
                         {processors?.map(item => (
                             <li className="dropdown" key={item._id} onClick={() => toggleDropdown(item)}
                                 style={{cursor: "pointer"}}>
