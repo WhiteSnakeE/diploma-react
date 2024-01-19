@@ -6,7 +6,7 @@ interface PrimaryButtonProps {
     text: string;
     onClick?: () => void;
     disabled?: boolean;
-    color: 'red' | 'green' | 'white' | 'blue';
+    color?: 'red' | 'green' | 'white' | 'blue';
     label: string;
 }
 

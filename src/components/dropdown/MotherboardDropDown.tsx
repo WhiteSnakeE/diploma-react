@@ -6,6 +6,8 @@ import {useSelector} from "react-redux";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import {Motherboard} from "../../api/types/motherboard/Motherboard";
 import "./Dropdown.css";
+import {ChosenCard} from "../chosenCard/ChosenCard";
+import {ComponentCard} from "../componentCard/ComponentCard";
 
 export const MotherboardDropDown: React.FC = () => {
     const {data: motherboards, error, isLoading} = MotherboardApi.useGetAllMotherBoardsQuery();
@@ -29,27 +31,27 @@ export const MotherboardDropDown: React.FC = () => {
 
     return (
         <div>
-            <Accordion>
+            <Accordion >
                 <AccordionSummary
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    {motherboard?.name == null ? "Choose the element" : motherboard.name}
+                    <ChosenCard component={motherboard} imgPackage={"motherboards"}/>
+
                 </AccordionSummary>
                 <AccordionDetails>
-                    {motherboards?.map(item => (
-                        <article  key={item._id} onClick={() => toggleDropdown(item)} style={{cursor: "pointer"}}>
-                            <h3>{item.name}</h3>
-                        </article>
-                    ))}
+                    <ul>
+                        {motherboards?.map(item => (
+                            <li className="dropdown" key={item._id}>
+                                <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"motherboards"}
+                                               isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}/>
+                            </li>
+                        ))}
+                    </ul>
                 </AccordionDetails>
             </Accordion>
-            <div>
-                {motherboard?.status}
-            </div>
         </div>
     );
 };
-
 
 

@@ -11,10 +11,13 @@ interface CheckCompatibilityMessageProps {
 export const CheckCompatibilityMessage: React.FC<CheckCompatibilityMessageProps> = ({icon, message}) => {
 
     return (
+
         <div className="message">
             {icon}
-            <div>{message}</div>
+            <div className="error-message">{message}</div>
         </div>
+
+
     )
 
 }

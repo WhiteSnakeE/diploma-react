@@ -7,10 +7,7 @@ import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import {Processor} from "../../api/types/processor/Processor";
 import {ComponentCard} from "../componentCard/ComponentCard";
 import "./Dropdown.css"
-import {CheckCompatibilityMessage} from "../checkCompatibilityMessage/CheckCompatibilityMessage";
-import {ApproveIcon} from "../icons/ApproveIcon";
-import {ErrorIcon} from "../icons/ErrorIcon";
-import {QuestionIcon} from "../icons/QuestionIcon";
+import {ChosenCard} from "../chosenCard/ChosenCard";
 
 export const ProcessorDropDown = () => {
     const {data: processors, error, isLoading} = ProcessorsApi.useGetAllProcessorsQuery();
@@ -34,37 +31,25 @@ export const ProcessorDropDown = () => {
 
     return (
         <div>
-            <Accordion>
+            <Accordion >
                 <AccordionSummary
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    {processor?.name == null ? "Choose the element" :
-                        <ComponentCard image={processor.img} name={processor.name} price={processor.price}
-                                       isShowButton={false}/>}
-                    <div className="check-icon">
-                        {processor?.status == null ?
-                            <CheckCompatibilityMessage icon={<QuestionIcon/>}/> :
-                            processor?.status == "" ? <CheckCompatibilityMessage icon={<ApproveIcon/>}/> :
-                                <CheckCompatibilityMessage icon={<ErrorIcon/>} message={processor.status}/>
-                        }
-                    </div>
+                    <ChosenCard component={processor} imgPackage={"processors"}/>
+
                 </AccordionSummary>
                 <AccordionDetails>
-                    <ul className="component-cards">
+                    <ul>
                         {processors?.map(item => (
-                            <li className="dropdown" key={item._id} onClick={() => toggleDropdown(item)}
-                                style={{cursor: "pointer"}}>
-                                <ComponentCard image={item.img} name={item.name} price={item.price}
-                                               isShowButton={true}/>
+                            <li className="dropdown" key={item._id}>
+                                <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"processors"}
+                                               isShowButton={true} color={"blue"} onClick={() => toggleDropdown(item)}/>
                             </li>
                         ))}
                     </ul>
                 </AccordionDetails>
             </Accordion>
-            <div>
-                {processor?.status}
-            </div>
         </div>
     );
 };

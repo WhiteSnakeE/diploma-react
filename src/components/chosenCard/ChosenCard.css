@@ -1,0 +1,15 @@
+.split-view {
+    display: flex;
+}
+
+.split-view__large {
+}
+
+.split-view__small {
+    width: 40%;
+    top: 50%;
+    position: absolute;
+    padding-left: 950px;
+    z-index: 2;
+    transform: translateY(-50%);
+}

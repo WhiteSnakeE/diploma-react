@@ -7,12 +7,22 @@ interface ComponentCardProps {
     image: string,
     name: string,
     price: number,
+    packageName: string,
     isShowButton: boolean,
+    color?: 'red' | 'green' | 'white' | 'blue';
+    onClick?: () => void,
 }
 
-export const ComponentCard: React.FC<ComponentCardProps> = ({image, name, price, isShowButton}) => {
+export const ComponentCard: React.FC<ComponentCardProps> = ({
+                                                                image,
+                                                                name,
+                                                                price,
+                                                                packageName,
+                                                                isShowButton, color,
+                                                                onClick
+                                                            }) => {
 
-    const myImage = require(`../../images/processors/${image}.webp`) as string;
+    const myImage = require(`../../images/${packageName}/${image}.png`) as string;
 
 
     return (
@@ -25,7 +35,8 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({image, name, price,
             {isShowButton &&
                 <div className="add-to-cart">
                     <div className="price">{price} грн</div>
-                    <PrimaryButton text="Select this item" color="blue" label="select this item" disabled={false}/>
+                    <PrimaryButton text="Select this item" color={color} label="select this item" disabled={false}
+                                   onClick={onClick}/>
                 </div>
             }
 
