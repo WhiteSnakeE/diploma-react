@@ -9,11 +9,12 @@ import {QuestionIcon} from "../icons/QuestionIcon";
 import {ApproveIcon} from "../icons/ApproveIcon";
 import {ErrorIcon} from "../icons/ErrorIcon";
 import {Motherboard} from "../../api/types/motherboard/Motherboard";
+import {Ram} from "../../api/types/ram/Ram";
 
 
 interface ChosenCardProps {
-    component: Processor | Motherboard | null;
-    imgPackage:string
+    component: Processor | Motherboard | Ram | null;
+    imgPackage: string
 }
 
 export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage}) => {
@@ -22,7 +23,8 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage}) =
         <div className="split-view">
             <div className="split-view__large">
                 {component?.name == null ? "Choose the element" :
-                    <ComponentCard image={component.img} name={component.name} price={component.price} packageName={imgPackage}
+                    <ComponentCard image={component.img} name={component.name} price={component.price}
+                                   packageName={imgPackage}
                                    isShowButton={false}/>}
             </div>
             <div className="split-view__small">

@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     font-weight: 700;
+    flex-wrap: wrap;
     font-size: 14px;
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -26,19 +27,22 @@
 
 .name {
     font-size: 14px;
-    padding-right: 100px;
     flex-grow: 1;
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .add-to-cart {
     display: flex;
-    gap: 12px; /* Отступ между ценой и кнопкой */
+    gap: 12px;
     align-items: center;
 }
 
 .price {
     font-weight: bold;
     font-size: 18px;
+    flex-grow: 1;
 }
 
 .add-to-cart .primary-button {

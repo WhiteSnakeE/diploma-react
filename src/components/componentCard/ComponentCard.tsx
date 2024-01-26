@@ -9,7 +9,7 @@ interface ComponentCardProps {
     price: number,
     packageName: string,
     isShowButton: boolean,
-    color?: 'red' | 'green' | 'white' | 'blue';
+    color?: 'red' | 'green' | 'white' | 'blue' | 'grey';
     onClick?: () => void,
 }
 

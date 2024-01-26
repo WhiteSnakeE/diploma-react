@@ -70,6 +70,29 @@
 .primary-button.blue .icon-container {
     --accent-color: #ffffff;
 }
+/* == GREY BUTTON == */
+
+.primary-button.grey {
+    background-color: #352f44;
+    color: #ffffff;
+}
+
+.primary-button.grey:hover {
+    background-color: #2a2438;
+}
+
+.primary-button.grey:active {
+    background-color: #5c5470;
+}
+
+.primary-button.grey.disabled {
+    background-color: #dbd8e3;
+    cursor: not-allowed;
+}
+
+.primary-button.grey .icon-container {
+    --accent-color: #ffffff;
+}
 
 /* == GREEN BUTTON == */
 

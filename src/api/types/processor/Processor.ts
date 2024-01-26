@@ -11,11 +11,11 @@ export type Processor = {
     number_of_cores: number,
     number_of_threads: number,
     memory_type: string[],
-    max_memory_frequency: string,
+    max_memory_frequency: number,
     core: string,
     cache_capacity: CacheCapacity,
     integratedvideocard: IntegratedVideocard,
-    TDP: string,
+    TDP: number,
     status: string | null,
     img: string
 }

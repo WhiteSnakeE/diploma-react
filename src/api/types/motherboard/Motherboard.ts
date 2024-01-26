@@ -9,7 +9,7 @@ export type Motherboard = {
     name: string,
     price: number,
     platform: Platform | null,
-    maxTDPProccesor: string,
+    maxTDPProccesor: number,
     memory: Memory | null,
     networkAndMultimedia: NetworkAndMultimedia | null,
     expansionSlots: ExpansionSlots | null,

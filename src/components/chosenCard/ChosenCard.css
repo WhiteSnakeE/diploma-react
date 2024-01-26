@@ -2,7 +2,8 @@
     display: flex;
 }
 
-.split-view__large {
+.split-view__large .name{
+    max-width: initial;
 }
 
 .split-view__small {

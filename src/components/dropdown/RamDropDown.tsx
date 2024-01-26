@@ -3,9 +3,11 @@ import {useGetAllRamsQuery} from "../../api/ramApi";
 import {RootState, useAppDispatch} from "../../api/store";
 import {updateConfiguration} from "../../api/slices/componentsSlice";
 import {useSelector} from "react-redux";
-import {Processor} from "../../api/types/processor/Processor";
 import {Ram} from "../../api/types/ram/Ram";
+import "./Dropdown.css";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {ChosenCard} from "../chosenCard/ChosenCard";
+import {ComponentCard} from "../componentCard/ComponentCard";
 
 export const RamDropDown = () => {
     const {data: rams, error, isLoading} = useGetAllRamsQuery();
@@ -27,26 +29,29 @@ export const RamDropDown = () => {
         }
     };
 
+    console.log(rams)
+
     return (
         <div>
-            <Accordion>
+            <Accordion >
                 <AccordionSummary
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    {ram?.name == null ? "Choose the element" : ram.name}
+                    <ChosenCard component={ram} imgPackage={"rams"}/>
+
                 </AccordionSummary>
                 <AccordionDetails>
-                    {rams?.map(item => (
-                        <article key={item._id} onClick={() => toggleDropdown(item)} style={{cursor:"pointer"}}>
-                            <h3>{item.name}</h3>
-                        </article>
-                    ))}
+                    <ul>
+                        {rams?.map(item => (
+                            <li className="dropdown" key={item._id}>
+                                <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"rams"}
+                                               isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}/>
+                            </li>
+                        ))}
+                    </ul>
                 </AccordionDetails>
             </Accordion>
-            <div>
-                {ram?.status}
-            </div>
         </div>
     );
 };

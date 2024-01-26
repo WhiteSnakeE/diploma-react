@@ -44,7 +44,7 @@ export const MotherboardDropDown: React.FC = () => {
                         {motherboards?.map(item => (
                             <li className="dropdown" key={item._id}>
                                 <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"motherboards"}
-                                               isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}/>
+                                               isShowButton={true} color={"grey"} onClick={() => toggleDropdown(item)}/>
                             </li>
                         ))}
                     </ul>

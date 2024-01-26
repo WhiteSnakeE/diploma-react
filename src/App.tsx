@@ -14,7 +14,7 @@ function App() {
               <div>
                   <MotherboardDropDown/>
                   <ProcessorDropDown/>
-                  {/*<RamDropDown/>*/}
+                  <RamDropDown/>
               </div>
           </ComputerContextProvider>
           <div>
