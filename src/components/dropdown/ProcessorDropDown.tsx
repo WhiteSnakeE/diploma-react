@@ -36,7 +36,7 @@ export const ProcessorDropDown = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    <ChosenCard component={processor} imgPackage={"processors"}/>
+                    <ChosenCard component={processor} imgPackage={"processors"} showCount={false}/>
 
                 </AccordionSummary>
                 <AccordionDetails>

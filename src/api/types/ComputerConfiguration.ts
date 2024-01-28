@@ -4,7 +4,7 @@ import {Ram} from "./ram/Ram";
 
 
 export type ComputerConfiguration = {
-    motherboard: Motherboard | null | undefined;
-    processor: Processor | null | undefined;
-    ram: Ram | null | undefined;
+    motherboard: Motherboard | null;
+    processor: Processor | null;
+    ram: Ram | null;
 }

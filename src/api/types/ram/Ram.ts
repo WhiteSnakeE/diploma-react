@@ -9,6 +9,7 @@ export type Ram = {
     frequency: number,
     taimings: string,
     supply_voltage: string,
+    count: number,
     status: string | null,
     img: string
 }

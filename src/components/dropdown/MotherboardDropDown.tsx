@@ -36,7 +36,7 @@ export const MotherboardDropDown: React.FC = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    <ChosenCard component={motherboard} imgPackage={"motherboards"}/>
+                    <ChosenCard component={motherboard} imgPackage={"motherboards"} showCount={false}/>
 
                 </AccordionSummary>
                 <AccordionDetails>

@@ -12,11 +12,11 @@ import {ComponentCard} from "../componentCard/ComponentCard";
 export const RamDropDown = () => {
     const {data: rams, error, isLoading} = useGetAllRamsQuery();
     const [isOpen, setIsOpen] = useState(false);
-    const ram = useSelector((state:RootState) => state.configurationCompatibility.ram);
-    const configuration = useSelector((state:RootState) => state.configurationCompatibility);
+    const ram = useSelector((state: RootState) => state.configurationCompatibility.ram);
+    const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch();
 
-    const toggleDropdown = async (selectedValue:Ram) => {
+    const toggleDropdown = async (selectedValue: Ram) => {
         const selectedIndex = selectedValue;
         const selectedObject = rams?.find(ram => ram === selectedIndex);
         if (selectedObject) {
@@ -29,16 +29,27 @@ export const RamDropDown = () => {
         }
     };
 
+    const changeCount = (newNumber: number) => {
+        if (newNumber !== 0) {
+            const updatedRam = {...ram, count: newNumber} as Ram;
+            const updatedConfig = {
+                ...configuration,
+                ram: updatedRam
+            }
+            dispatch(updateConfiguration(updatedConfig))
+        }
+    }
+
     console.log(rams)
 
     return (
         <div>
-            <Accordion >
+            <Accordion>
                 <AccordionSummary
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    <ChosenCard component={ram} imgPackage={"rams"}/>
+                    <ChosenCard component={ram} imgPackage={"rams"} showCount={true}/>
 
                 </AccordionSummary>
                 <AccordionDetails>
@@ -46,7 +57,8 @@ export const RamDropDown = () => {
                         {rams?.map(item => (
                             <li className="dropdown" key={item._id}>
                                 <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"rams"}
-                                               isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}/>
+                                               isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                                              />
                             </li>
                         ))}
                     </ul>

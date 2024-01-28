@@ -2,7 +2,7 @@
     display: flex;
 }
 
-.split-view__large .name{
+.split-view__large .name {
     max-width: initial;
 }
 
@@ -13,4 +13,8 @@
     padding-left: 950px;
     z-index: 2;
     transform: translateY(-50%);
+}
+
+.count {
+    padding-right: 400px;
 }
