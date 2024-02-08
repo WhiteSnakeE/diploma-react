@@ -19,9 +19,9 @@ function App() {
                     <RamDropDown/>
                 </div>
             </ComputerContextProvider>
-            <div>
-                <Dropdown/>
-            </div>
+            {/*<div>*/}
+            {/*    <Dropdown/>*/}
+            {/*</div>*/}
         </div>
 
     );

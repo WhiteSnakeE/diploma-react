@@ -16,7 +16,7 @@ const Dropdown: React.FC<Props> = ({
 
     return (
         <div className="dropdown">
-            <button className="dropbtn" onClick={() => setIsOpen(!isOpen)} disabled={true}>
+            <button className="dropbtn" onClick={() => setIsOpen(!isOpen)} >
                 <span>Я ненавижу Css</span>
 
                 <button>

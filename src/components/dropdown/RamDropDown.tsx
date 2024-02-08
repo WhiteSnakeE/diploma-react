@@ -5,7 +5,6 @@ import {updateConfiguration} from "../../api/slices/componentsSlice";
 import {useSelector} from "react-redux";
 import {Ram} from "../../api/types/ram/Ram";
 import "./Dropdown.css";
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import {ChosenCard} from "../chosenCard/ChosenCard";
 import {ComponentCard} from "../componentCard/ComponentCard";
 
@@ -15,6 +14,7 @@ export const RamDropDown = () => {
     const ram = useSelector((state: RootState) => state.configurationCompatibility.ram);
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch();
+
 
     const toggleDropdown = async (selectedValue: Ram) => {
         const selectedIndex = selectedValue;
@@ -43,27 +43,22 @@ export const RamDropDown = () => {
     console.log(rams)
 
     return (
-        <div>
-            <Accordion >
-                <AccordionSummary
-                    aria-controls="panel1-content"
-                    id="panel1-header"
-                >
-                    <ChosenCard component={ram} imgPackage={"rams"} showCount={true}/>
+        <div className="dropdown">
+            <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
+                <ChosenCard component={ram} imgPackage={"rams"} showCount={true}/>
+            </article>
+            {isOpen && (
+                <ul>
+                    {rams?.map(item => (
+                        <li className="dropdown" key={item._id}>
+                            <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"rams"}
+                                           isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            )}
 
-                </AccordionSummary>
-                <AccordionDetails>
-                    <ul>
-                        {rams?.map(item => (
-                            <li className="dropdown" key={item._id}>
-                                <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"rams"}
-                                               isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
-                                              />
-                            </li>
-                        ))}
-                    </ul>
-                </AccordionDetails>
-            </Accordion>
         </div>
     );
 };

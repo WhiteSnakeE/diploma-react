@@ -9,7 +9,6 @@ import {ApproveIcon} from "../icons/ApproveIcon";
 import {ErrorIcon} from "../icons/ErrorIcon";
 import {Motherboard} from "../../api/types/motherboard/Motherboard";
 import {Ram} from "../../api/types/ram/Ram";
-import {ComponentCount} from "../Count/ComponentCount";
 
 
 interface ChosenCardProps {

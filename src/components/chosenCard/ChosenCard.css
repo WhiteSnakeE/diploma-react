@@ -1,14 +1,13 @@
 .split-view {
-    display: flex;
+    outline: none;
 }
-
-.split-view__large .name {
-    max-width: initial;
+.split-view__large{
+    outline: none;
 }
 
 .split-view__small {
-    width: 40%;
-    top: 50%;
+    /*width: 40%;*/
+    /*top: 50%;*/
     position: absolute;
     padding-left: 950px;
     z-index: 2;
