@@ -1,6 +1,7 @@
 import * as React from 'react';
 import '../componentCard/ComponentCard.css'
 import {PrimaryButton} from "../Buttons/PrimaryButton";
+import {ComponentCount} from "../Count/ComponentCount";
 
 interface ComponentCardProps {
     image: string,
@@ -10,6 +11,7 @@ interface ComponentCardProps {
     isShowButton: boolean,
     color?: 'red' | 'green' | 'white' | 'blue' | 'grey';
     onClick?: () => void,
+    showCount?: boolean,
 
 
 }
@@ -21,6 +23,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
                                                                 packageName,
                                                                 isShowButton, color,
                                                                 onClick,
+                                                                showCount
                                                             }) => {
 
     const myImage = require(`../../images/${packageName}/${image}.png`) as string;
@@ -32,7 +35,11 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
                 <img src={myImage} alt="Product"/>
             </div>
             <div className="name">{name}</div>
-
+            {showCount &&
+                <div className="count" onClick={(e) => e.stopPropagation()}>
+                    <ComponentCount />
+                </div>
+            }
             {isShowButton &&
                 <div className="add-to-cart">
 

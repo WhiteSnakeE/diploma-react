@@ -16,5 +16,5 @@
 }
 
 .count {
-    padding-right: 400px;
+   z-index: 1000;
 }

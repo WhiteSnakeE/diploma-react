@@ -44,7 +44,7 @@ export const RamDropDown = () => {
 
     return (
         <div>
-            <Accordion>
+            <Accordion >
                 <AccordionSummary
                     aria-controls="panel1-content"
                     id="panel1-header"

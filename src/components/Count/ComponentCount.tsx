@@ -25,9 +25,20 @@ export const ComponentCount = () => {
 
     return (
         <div>
-            <button onClick={() => changeCount(number - 1)}>-</button>
+            <button
+                onClick={(e) => {
+                    e.preventDefault();
+                    changeCount(number - 1);
+                }}
+            >-</button>
             <input className="input-field" value={number}/>
-            <button onClick={() => changeCount(number + 1)}>+</button>
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    changeCount(number + 1);
+                }}
+            >+</button>
         </div>
     );
 }

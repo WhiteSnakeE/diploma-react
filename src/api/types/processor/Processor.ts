@@ -18,4 +18,6 @@ export type Processor = {
     TDP: number,
     status: string | null,
     img: string
+    pci_express_revision: number[]
+
 }

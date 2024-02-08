@@ -27,14 +27,14 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, sh
                     component?.name == null ?
                         <div>Choose the element</div> :
                         <>
-                            <div className="count"> {showCount && <ComponentCount/>}</div>
+                            {/*<div className="count"> {showCount && <ComponentCount/>}</div>*/}
                             <ComponentCard
                                 image={component.img}
                                 name={component.name}
                                 price={component.price}
                                 packageName={imgPackage}
                                 isShowButton={false}
-
+                                showCount = {showCount}
                             />
                         </>
                 }

@@ -5,26 +5,26 @@ import {RamDropDown} from "./components/dropdown/RamDropDown";
 import {ComputerContextProvider} from "./context/ComputerConfigurationContext";
 import {ComponentCard} from "./components/componentCard/ComponentCard";
 import {ComponentCount} from "./components/Count/ComponentCount";
+import Dropdown from "./Dropdown";
 
 
 function App() {
 
-  return (
-      <div>
-          <ComputerContextProvider>
-              <div>
-                  <MotherboardDropDown/>
-                  <ProcessorDropDown/>
-                  <RamDropDown/>
-              </div>
-          </ComputerContextProvider>
-          <div>
-          </div>
-          <div>
-          </div>
-      </div>
+    return (
+        <div>
+            <ComputerContextProvider>
+                <div>
+                    <MotherboardDropDown/>
+                    <ProcessorDropDown/>
+                    <RamDropDown/>
+                </div>
+            </ComputerContextProvider>
+            <div>
+                <Dropdown/>
+            </div>
+        </div>
 
-  );
+    );
 }
 
 export default App;
