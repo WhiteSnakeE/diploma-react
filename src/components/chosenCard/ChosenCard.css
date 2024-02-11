@@ -1,19 +1,32 @@
 .split-view {
-    outline: none;
+    display: flex;
+    align-items: flex-start; /* Выравнивание элементов по верхнему краю */
+}
+
+.split-view .product-card{
+    display: flex;
+   justify-content: initial;
 }
 .split-view__large{
-    outline: none;
+    flex-grow: 1;
+    position: relative;
 }
 
 .split-view__small {
-    /*width: 40%;*/
-    /*top: 50%;*/
+    display: flex;
     position: absolute;
     padding-left: 950px;
     z-index: 2;
-    transform: translateY(-50%);
+    /*transform: translateY(-50%);*/
 }
 
 .count {
    z-index: 1000;
+}
+
+.CheckCompatibilityMessage {
+    position: absolute; /* Устанавливаем абсолютное позиционирование */
+    bottom: 0; /* Помещаем его внизу родительского контейнера */
+    left: 0; /* Выравниваем его слева */
+    z-index: 1; /* Устанавливаем z-index, чтобы он был выше, чем компоненты с нулевым z-index */
 }

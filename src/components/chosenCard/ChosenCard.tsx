@@ -1,5 +1,5 @@
 import * as React from 'react';
-import '../componentCard/ComponentCard.css'
+
 import "./ChosenCard.css";
 import {Processor} from "../../api/types/processor/Processor";
 import {ComponentCard} from "../componentCard/ComponentCard";

@@ -30,26 +30,22 @@ export const MotherboardDropDown: React.FC = () => {
 
 
     return (
-        <div>
-            <Accordion >
-                <AccordionSummary
-                    aria-controls="panel1-content"
-                    id="panel1-header"
-                >
-                    <ChosenCard component={motherboard} imgPackage={"motherboards"} showCount={false}/>
+        <div className="dropdown">
+            <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
+                <ChosenCard component={motherboard} imgPackage={"motherboards"} showCount={true}/>
+            </article>
+            {isOpen && (
+                <ul>
+                    {motherboards?.map(item => (
+                        <li className="dropdown" key={item._id}>
+                            <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"motherboards"}
+                                           isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            )}
 
-                </AccordionSummary>
-                <AccordionDetails>
-                    <ul>
-                        {motherboards?.map(item => (
-                            <li className="dropdown" key={item._id}>
-                                <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"motherboards"}
-                                               isShowButton={true} color={"grey"} onClick={() => toggleDropdown(item)}/>
-                            </li>
-                        ))}
-                    </ul>
-                </AccordionDetails>
-            </Accordion>
         </div>
     );
 };

@@ -30,26 +30,22 @@ export const ProcessorDropDown = () => {
     };
 
     return (
-        <div>
-            <Accordion >
-                <AccordionSummary
-                    aria-controls="panel1-content"
-                    id="panel1-header"
-                >
-                    <ChosenCard component={processor} imgPackage={"processors"} showCount={false}/>
+        <div className="dropdown">
+            <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
+                <ChosenCard component={processor} imgPackage={"processors"} showCount={true}/>
+            </article>
+            {isOpen && (
+                <ul>
+                    {processors?.map(item => (
+                        <li className="dropdown" key={item._id}>
+                            <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"processors"}
+                                           isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            )}
 
-                </AccordionSummary>
-                <AccordionDetails>
-                    <ul>
-                        {processors?.map(item => (
-                            <li className="dropdown" key={item._id}>
-                                <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"processors"}
-                                               isShowButton={true} color={"blue"} onClick={() => toggleDropdown(item)}/>
-                            </li>
-                        ))}
-                    </ul>
-                </AccordionDetails>
-            </Accordion>
         </div>
     );
 };
