@@ -6,9 +6,11 @@ import {Processor} from "../types/processor/Processor";
 import {Ram} from "../types/ram/Ram";
 
 
-export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, { dispatch: AppDispatch }>(
+export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
+    dispatch: AppDispatch
+}>(
     'check/configuration',
-    async (configuration, { dispatch }) => {
+    async (configuration, {dispatch}) => {
         try {
             const response = await axios.post<ComputerConfiguration>(
                 `${process.env.REACT_APP_BACKEND}/check/compatibility`,
@@ -23,15 +25,17 @@ export const updateConfiguration = createAsyncThunk<ComputerConfiguration, Compu
 );
 
 interface ComputerConfiguration {
-    motherboard: Motherboard | null ;
-    processor: Processor | null ;
-    ram: Ram | null ;
+    motherboard: Motherboard | null;
+    processor: Processor | null;
+    ram: Ram | null;
+    advices: string[] | null;
 }
 
 const initialState: ComputerConfiguration = {
     motherboard: null,
     processor: null,
     ram: null,
+    advices: null
 };
 
 export const configurationCompatibilitySlice = createSlice({
@@ -50,14 +54,18 @@ export const configurationCompatibilitySlice = createSlice({
             state.ram = action.payload;
             return state;
         },
+        setAdvices : (state, action) => {
+            state.advices = action.payload;
+            return state;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(updateConfiguration.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
-            // Update the state with the fulfilled action payload
             const data = action.payload;
             state.motherboard = data.motherboard;
             state.processor = data.processor;
             state.ram = data.ram;
+            state.advices = data.advices;
         });
     },
 });

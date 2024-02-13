@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import {RootState, useAppDispatch} from "../../api/store";
 import {updateConfiguration} from "../../api/slices/componentsSlice";
 import {useSelector} from "react-redux";
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import {Motherboard} from "../../api/types/motherboard/Motherboard";
 import "./Dropdown.css";
 import {ChosenCard} from "../chosenCard/ChosenCard";

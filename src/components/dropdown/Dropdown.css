@@ -1,6 +1,7 @@
 .dropdown {
     margin-bottom: 5px;
     outline: none;
+    width: 60%;
 }
 
 li {

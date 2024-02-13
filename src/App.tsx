@@ -6,6 +6,7 @@ import {ComputerContextProvider} from "./context/ComputerConfigurationContext";
 import {ComponentCard} from "./components/componentCard/ComponentCard";
 import {ComponentCount} from "./components/Count/ComponentCount";
 import Dropdown from "./Dropdown";
+import {Advices} from "./components/Advices/Advices";
 
 
 function App() {
@@ -18,10 +19,8 @@ function App() {
                     <ProcessorDropDown/>
                     <RamDropDown/>
                 </div>
+                <Advices/>
             </ComputerContextProvider>
-            {/*<div>*/}
-            {/*    <Dropdown/>*/}
-            {/*</div>*/}
         </div>
 
     );

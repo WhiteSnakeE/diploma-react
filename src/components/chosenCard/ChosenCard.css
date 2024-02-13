@@ -15,9 +15,10 @@
 .split-view__small {
     display: flex;
     position: absolute;
-    padding-left: 950px;
+    left:1000px;
     z-index: 2;
-    /*transform: translateY(-50%);*/
+    text-align: center;
+
 }
 
 .count {
@@ -25,8 +26,5 @@
 }
 
 .CheckCompatibilityMessage {
-    position: absolute; /* Устанавливаем абсолютное позиционирование */
-    bottom: 0; /* Помещаем его внизу родительского контейнера */
-    left: 0; /* Выравниваем его слева */
     z-index: 1; /* Устанавливаем z-index, чтобы он был выше, чем компоненты с нулевым z-index */
 }
