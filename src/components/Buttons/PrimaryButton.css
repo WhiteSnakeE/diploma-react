@@ -146,3 +146,27 @@
 .primary-button.white.disabled .icon-container {
     --accent-color: #d7d5db;
 }
+
+/* == ORANGE BUTTON == */
+
+.primary-button.orange {
+    background-color:#e59400;
+    color: #ffffff;
+}
+
+.primary-button.orange:hover {
+    background-color: #ffa500;
+}
+
+.primary-button.orange:active {
+    background-color: #cc8400;
+}
+
+.primary-button.orange.disabled {
+    background-color: #ffc966;
+    cursor: not-allowed;
+}
+
+.primary-button.orange .icon-container {
+    --accent-color: #ffffff;
+}

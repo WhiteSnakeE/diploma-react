@@ -1,5 +1,7 @@
+import {M2} from "./M2";
+
 export type InternalInterfaces = {
     CPU_power_supply:string,
-    m2:number,
-    SATA_3: number
+    m2:M2,
+    sata3: number
 }

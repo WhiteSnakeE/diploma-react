@@ -3,7 +3,6 @@ import {ProcessorsApi} from "../../api/proccessorsApi";
 import {updateConfiguration,} from "../../api/slices/componentsSlice";
 import {RootState, useAppDispatch} from "../../api/store";
 import {useSelector} from "react-redux";
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import {Processor} from "../../api/types/processor/Processor";
 import {ComponentCard} from "../componentCard/ComponentCard";
 import "./Dropdown.css"
@@ -32,14 +31,14 @@ export const ProcessorDropDown = () => {
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={processor} imgPackage={"processors"} showCount={true}/>
+                <ChosenCard component={processor} imgPackage={"processors"} showCount={true} showAddRemove={false}/>
             </article>
             {isOpen && (
                 <ul>
                     {processors?.map(item => (
                         <li className="dropdown" key={item._id}>
                             <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"processors"}
-                                           isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                                           isShowButton={true} color={"blue"} onClick={() => toggleDropdown(item)}
                             />
                         </li>
                     ))}

@@ -1,6 +1,6 @@
 import {Platform} from "./Platform";
 import {Memory} from "./Memory";
-import {NetworkAndMultimedia} from "./ NetworkAndMultimedia";
+import {NetworkAndMultimedia} from "./NetworkAndMultimedia";
 import {ExpansionSlots} from "./ExpansionSlots";
 import {InternalInterfaces} from "./InternalInterfaces";
 

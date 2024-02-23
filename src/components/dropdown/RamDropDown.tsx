@@ -40,12 +40,10 @@ export const RamDropDown = () => {
         }
     }
 
-    console.log(rams)
-
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={ram} imgPackage={"rams"} showCount={true}/>
+                <ChosenCard component={ram} imgPackage={"rams"} showCount={true} showAddRemove={false}/>
             </article>
             {isOpen && (
                 <ul>

@@ -31,14 +31,14 @@ export const MotherboardDropDown: React.FC = () => {
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={motherboard} imgPackage={"motherboards"} showCount={true}/>
+                <ChosenCard component={motherboard} imgPackage={"motherboards"} showCount={true} showAddRemove={false}/>
             </article>
             {isOpen && (
                 <ul>
                     {motherboards?.map(item => (
                         <li className="dropdown" key={item._id}>
                             <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"motherboards"}
-                                           isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                                           isShowButton={true} color={"grey"} onClick={() => toggleDropdown(item)}
                             />
                         </li>
                     ))}

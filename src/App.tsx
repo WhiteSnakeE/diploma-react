@@ -3,13 +3,17 @@ import React from "react";
 import {ProcessorDropDown} from "./components/dropdown/ProcessorDropDown";
 import {RamDropDown} from "./components/dropdown/RamDropDown";
 import {ComputerContextProvider} from "./context/ComputerConfigurationContext";
-import {ComponentCard} from "./components/componentCard/ComponentCard";
-import {ComponentCount} from "./components/Count/ComponentCount";
-import Dropdown from "./Dropdown";
 import {Advices} from "./components/Advices/Advices";
+import {VideocardDropDown} from "./components/dropdown/VideocardDropDown";
+import {useSelector} from "react-redux";
+import {RootState} from "./api/store";
+import {SsdDropDown} from "./components/dropdown/SsdDropdown";
 
 
 function App() {
+    const ssds = useSelector((state: RootState) => state.configurationCompatibility.ssd);
+
+    console.log(ssds)
 
     return (
         <div>
@@ -18,8 +22,32 @@ function App() {
                     <MotherboardDropDown/>
                     <ProcessorDropDown/>
                     <RamDropDown/>
+                    <VideocardDropDown/>
+                    {ssds.length === 0 ? (
+                        <SsdDropDown ssd={null} chosenSsd={[]}/>
+                    ) : (
+                        ssds.map((ssd, index) => {
+
+                            if (ssd === null) {
+                                return <SsdDropDown key={index} ssd={null} chosenSsd={ssds}/>
+                            }
+
+                            return (
+                                <SsdDropDown
+                                    key={ssd.id}
+                                    index={index}
+                                    ssd={ssd}
+                                    chosenSsd={ssds}
+                                />
+                            )
+
+                        })
+                    )}
+
                 </div>
+
                 <Advices/>
+
             </ComputerContextProvider>
         </div>
 

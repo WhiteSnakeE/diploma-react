@@ -4,6 +4,8 @@ import {AppDispatch} from "../store";
 import axios from "axios";
 import {Processor} from "../types/processor/Processor";
 import {Ram} from "../types/ram/Ram";
+import {Videocard} from "../types/videocard/Videocard";
+import {Ssd} from "../types/ssd/Ssd";
 
 
 export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
@@ -16,6 +18,7 @@ export const updateConfiguration = createAsyncThunk<ComputerConfiguration, Compu
                 `${process.env.REACT_APP_BACKEND}/check/compatibility`,
                 configuration
             );
+            console.log(response.data)
             return response.data;
         } catch (error) {
             console.error('Error while checking configuration:', error);
@@ -28,6 +31,8 @@ interface ComputerConfiguration {
     motherboard: Motherboard | null;
     processor: Processor | null;
     ram: Ram | null;
+    videocard: Videocard | null;
+    ssd: (Ssd|null) [];
     advices: string[] | null;
 }
 
@@ -35,6 +40,8 @@ const initialState: ComputerConfiguration = {
     motherboard: null,
     processor: null,
     ram: null,
+    videocard: null,
+    ssd: [],
     advices: null
 };
 
@@ -54,7 +61,15 @@ export const configurationCompatibilitySlice = createSlice({
             state.ram = action.payload;
             return state;
         },
-        setAdvices : (state, action) => {
+        setVideocard: (state, action: PayloadAction<Videocard>) => {
+            state.videocard = action.payload;
+            return state;
+        },
+        setSsd: (state, action: PayloadAction<(Ssd|null)[]>) => {
+            state.ssd = action.payload;
+            return state;
+        },
+        setAdvices: (state, action) => {
             state.advices = action.payload;
             return state;
         }
@@ -65,6 +80,8 @@ export const configurationCompatibilitySlice = createSlice({
             state.motherboard = data.motherboard;
             state.processor = data.processor;
             state.ram = data.ram;
+            state.videocard = data.videocard;
+            state.ssd = data.ssd;
             state.advices = data.advices;
         });
     },
