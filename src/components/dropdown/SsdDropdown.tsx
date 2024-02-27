@@ -55,17 +55,22 @@ export const SsdDropDown: React.FC<SsdDropdownProps> = ({ssd, chosenSsd, index})
         }
     }
 
+    console.info(chosenSsd)
     return (
+
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={ssd} imgPackage={"ssd"} showCount={true} showAddRemove={true} changeCount={changeCount} number={number}/>
+                <ChosenCard component={ssd} imgPackage={"ssd"} showCount={true} showAddRemove={true}
+                            changeCount={changeCount} number={number}/>
             </article>
+
             {isOpen && (
                 <ul>
                     {ssds?.map(item => (
                         <li className="dropdown" key={item.id}>
                             <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"ssd"}
                                            isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                                           disabled={chosenSsd.some(ssd => ssd === null ? false : ssd.id === item.id)}
                             />
                         </li>
                     ))}

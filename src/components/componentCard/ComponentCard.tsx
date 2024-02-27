@@ -20,6 +20,7 @@ interface ComponentCardProps {
     showCount?: boolean,
     changeCount?: (newNumber: number) => void;
     number?: number;
+    disabled?: boolean
 
 
 }
@@ -29,7 +30,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
                                                                 packageName,
                                                                 isShowButton, color,
                                                                 onClick,
-                                                                showCount, changeCount, number
+                                                                showCount, changeCount, number,disabled
                                                             }) => {
 
     const myImage = require(`../../images/${packageName}/${image}.png`) as string;
@@ -56,7 +57,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
             {isShowButton &&
                 <div className="add-to-cart">
                     <div className="price">{price} грн</div>
-                    <PrimaryButton text="Select this item" color={color} label="select this item" disabled={false}
+                    <PrimaryButton text="Select this item" color={color} label="select this item" disabled={disabled === undefined ? false : disabled }
                                    onClick={onClick}/>
                 </div>
             }
