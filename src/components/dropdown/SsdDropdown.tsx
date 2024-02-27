@@ -20,20 +20,20 @@ export const SsdDropDown: React.FC<SsdDropdownProps> = ({ssd, chosenSsd, index})
     const [isOpen, setIsOpen] = useState(false);
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch();
+    const [number, setNumber] = useState(1);
 
     const toggleDropdown = async (selectedValue: Ssd) => {
-        // const selectedIndex = ssds?.findIndex(r => r.id === selectedValue.id)
-        // console.log(selectedIndex)
         const updatedSsd = [...chosenSsd]
-        console.log(updatedSsd)
+        console.log(index)
         index = index === undefined ? 0 : index
+        // updatedSsd[index] = selectedValue
+        console.log(index)
+        console.log(selectedValue)
         updatedSsd[index] = selectedValue
-        console.log(updatedSsd)
         const updatedConfig = {
             ...configuration,
             ssd: updatedSsd
         }
-        console.log(updatedConfig)
         dispatch(updateConfiguration(updatedConfig))
         setIsOpen(!isOpen);
 
@@ -42,21 +42,23 @@ export const SsdDropDown: React.FC<SsdDropdownProps> = ({ssd, chosenSsd, index})
 
     const changeCount = (newNumber: number) => {
         if (newNumber !== 0) {
-            const updatedRam = {...ssd, count: newNumber} as Ram;
+            setNumber(newNumber);
+            const updatedSsd = {...ssd, count: newNumber} as Ssd;
+            const updatedSsdList = [...chosenSsd]
+            index = index === undefined ? 0 : index
+            updatedSsdList[index] = updatedSsd
             const updatedConfig = {
                 ...configuration,
-                ram: updatedRam
+                ssd: updatedSsdList
             }
             dispatch(updateConfiguration(updatedConfig))
         }
     }
 
-    console.log(ssds)
-
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={ssd} imgPackage={"ssd"} showCount={true} showAddRemove={true}/>
+                <ChosenCard component={ssd} imgPackage={"ssd"} showCount={true} showAddRemove={true} changeCount={changeCount} number={number}/>
             </article>
             {isOpen && (
                 <ul>

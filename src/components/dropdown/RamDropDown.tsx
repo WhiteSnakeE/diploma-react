@@ -14,6 +14,7 @@ export const RamDropDown = () => {
     const ram = useSelector((state: RootState) => state.configurationCompatibility.ram);
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch();
+    const [number, setNumber] = useState(1);
 
 
     const toggleDropdown = async (selectedValue: Ram) => {
@@ -31,6 +32,7 @@ export const RamDropDown = () => {
 
     const changeCount = (newNumber: number) => {
         if (newNumber !== 0) {
+            setNumber(newNumber);
             const updatedRam = {...ram, count: newNumber} as Ram;
             const updatedConfig = {
                 ...configuration,
@@ -43,7 +45,7 @@ export const RamDropDown = () => {
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={ram} imgPackage={"rams"} showCount={true} showAddRemove={false}/>
+                <ChosenCard component={ram} imgPackage={"rams"} showCount={true} showAddRemove={false} changeCount={changeCount} number={number}/>
             </article>
             {isOpen && (
                 <ul>

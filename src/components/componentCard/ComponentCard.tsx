@@ -1,8 +1,13 @@
 import * as React from 'react';
 import '../componentCard/ComponentCard.css'
 import {PrimaryButton} from "../Buttons/PrimaryButton";
-import {ComponentCount} from "../Count/ComponentCount";
+import {CountComponent} from "../Count/CountComponent";
 import {AddNewComponentButton} from "../Buttons/AddNewComponentButton";
+import {Motherboard} from "../../api/types/motherboard/Motherboard";
+import {Processor} from "../../api/types/processor/Processor";
+import {Ram} from "../../api/types/ram/Ram";
+import {Videocard} from "../../api/types/videocard/Videocard";
+import {Ssd} from "../../api/types/ssd/Ssd";
 
 interface ComponentCardProps {
     image: string,
@@ -13,18 +18,18 @@ interface ComponentCardProps {
     color?: 'red' | 'green' | 'white' | 'blue' | 'grey' | 'orange';
     onClick?: () => void,
     showCount?: boolean,
+    changeCount?: (newNumber: number) => void;
+    number?: number;
 
 
 }
 
 export const ComponentCard: React.FC<ComponentCardProps> = ({
-                                                                image,
-                                                                name,
-                                                                price,
+                                                                image, price, name,
                                                                 packageName,
                                                                 isShowButton, color,
                                                                 onClick,
-                                                                showCount
+                                                                showCount, changeCount, number
                                                             }) => {
 
     const myImage = require(`../../images/${packageName}/${image}.png`) as string;
@@ -39,7 +44,8 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
             {showCount &&
                 <div>
                     <div className="count" onClick={(e) => e.stopPropagation()}>
-                        <ComponentCount />
+                        {changeCount !== undefined && number !== undefined &&
+                            <CountComponent changeCount={changeCount} number={number}/>}
                     </div>
                     <div className="count" onClick={(e) => e.stopPropagation()}>
                         <AddNewComponentButton/>

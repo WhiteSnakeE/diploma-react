@@ -13,7 +13,6 @@ const Dropdown = ({url, name}) => {
 
         axios.post("test/" + url, selectedObject)
             .then(response => setIsOkay(response.data))
-        console.log(isOkay)
         setIsOpen(!isOpen);
     };
 

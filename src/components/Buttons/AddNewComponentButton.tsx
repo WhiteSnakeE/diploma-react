@@ -16,18 +16,17 @@ export const AddNewComponentButton = () => {
             ...configuration,
             ssd: updatedSsd
         }
-        console.log(updatedSsd)
-        console.log(updatedConfig)
-        dispatch(configurationCompatibilitySlice.actions.setSsd(updatedSsd))
+        dispatch(updateConfiguration(updatedConfig))
 
     }
 
     return (
         <div>
-            <button
+            <button disabled={ssds.includes(null)}
                 onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
+
                     addSSdDropdown();
                 }}
             > Add another ssd

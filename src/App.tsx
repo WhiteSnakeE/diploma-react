@@ -11,7 +11,7 @@ import {SsdDropDown} from "./components/dropdown/SsdDropdown";
 
 
 function App() {
-    const ssds = useSelector((state: RootState) => state.configurationCompatibility.ssd);
+    let ssds = useSelector((state: RootState) => state.configurationCompatibility.ssd);
 
     console.log(ssds)
 
@@ -29,12 +29,10 @@ function App() {
                         ssds.map((ssd, index) => {
 
                             if (ssd === null) {
-                                return <SsdDropDown key={index} ssd={null} chosenSsd={ssds}/>
+                                return <SsdDropDown index={index} ssd={null} chosenSsd={ssds}/>
                             }
-
                             return (
                                 <SsdDropDown
-                                    key={ssd.id}
                                     index={index}
                                     ssd={ssd}
                                     chosenSsd={ssds}

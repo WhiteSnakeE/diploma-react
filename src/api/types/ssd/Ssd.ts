@@ -10,6 +10,7 @@ export type Ssd = {
     writeSpeed: string,
     energyConsumption: number,
     status: string | null,
+    count: number,
     img: string,
     size: number
 }

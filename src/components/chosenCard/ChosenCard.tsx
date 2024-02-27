@@ -18,9 +18,11 @@ interface ChosenCardProps {
     imgPackage: string,
     showCount: boolean
     showAddRemove: boolean
+    changeCount?: (newNumber: number) => void;
+    number?: number;
 }
 
-export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, showCount}) => {
+export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, showCount,changeCount, number}) => {
 
     // console.log(component)
     return (
@@ -37,6 +39,8 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, sh
                                 packageName={imgPackage}
                                 isShowButton={false}
                                 showCount={showCount}
+                                changeCount = {changeCount}
+                                number = {number}
                             />
                         </>
                 }

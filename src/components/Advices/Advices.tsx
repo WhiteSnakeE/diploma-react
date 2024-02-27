@@ -5,8 +5,6 @@ import React from "react";
 export const Advices = () => {
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
 
-    console.log(configuration)
-
     return (
         <div>
             ADVICES
