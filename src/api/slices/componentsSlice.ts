@@ -6,6 +6,7 @@ import {Processor} from "../types/processor/Processor";
 import {Ram} from "../types/ram/Ram";
 import {Videocard} from "../types/videocard/Videocard";
 import {Ssd} from "../types/ssd/Ssd";
+import {Hdd} from "../types/hdd/Hdd";
 
 
 export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
@@ -32,7 +33,8 @@ interface ComputerConfiguration {
     processor: Processor | null;
     ram: Ram | null;
     videocard: Videocard | null;
-    ssd: (Ssd|null) [];
+    ssd: (Ssd | null) [];
+    hdd: (Hdd | null) [];
     advices: string[] | null;
 }
 
@@ -42,6 +44,7 @@ const initialState: ComputerConfiguration = {
     ram: null,
     videocard: null,
     ssd: [],
+    hdd: [],
     advices: null
 };
 
@@ -65,8 +68,12 @@ export const configurationCompatibilitySlice = createSlice({
             state.videocard = action.payload;
             return state;
         },
-        setSsd: (state, action: PayloadAction<(Ssd|null)[]>) => {
+        setSsd: (state, action: PayloadAction<(Ssd | null)[]>) => {
             state.ssd = action.payload;
+            return state;
+        },
+        setHdd: (state, action: PayloadAction<(Hdd | null)[]>) => {
+            state.hdd = action.payload;
             return state;
         },
         setAdvices: (state, action) => {
@@ -82,6 +89,7 @@ export const configurationCompatibilitySlice = createSlice({
             state.ram = data.ram;
             state.videocard = data.videocard;
             state.ssd = data.ssd;
+            state.hdd = data.hdd;
             state.advices = data.advices;
         });
     },

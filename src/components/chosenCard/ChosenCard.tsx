@@ -11,10 +11,11 @@ import {Motherboard} from "../../api/types/motherboard/Motherboard";
 import {Ram} from "../../api/types/ram/Ram";
 import {Videocard} from "../../api/types/videocard/Videocard";
 import {Ssd} from "../../api/types/ssd/Ssd";
+import {Hdd} from "../../api/types/hdd/Hdd";
 
 
 interface ChosenCardProps {
-    component: Processor | Motherboard | Ram | Videocard | Ssd | null;
+    component: Processor | Motherboard | Ram | Videocard | Ssd | Hdd |null;
     imgPackage: string,
     showCount: boolean
     showAddRemove: boolean
@@ -22,7 +23,7 @@ interface ChosenCardProps {
     number?: number;
 }
 
-export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, showCount,changeCount, number}) => {
+export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, showCount,changeCount,showAddRemove, number}) => {
 
     // console.log(component)
     return (
@@ -41,6 +42,7 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, sh
                                 showCount={showCount}
                                 changeCount = {changeCount}
                                 number = {number}
+                                showAddRemove = {showAddRemove}
                             />
                         </>
                 }
@@ -50,7 +52,7 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, sh
             <div className="split-view__small">
                 {component?.status == null ?
                     <CheckCompatibilityMessage icon={<QuestionIcon/>}/> :
-                    component?.status == "" ? <CheckCompatibilityMessage icon={<ApproveIcon/>}/> :
+                    component?.status === "" ? <CheckCompatibilityMessage icon={<ApproveIcon/>}/> :
                         <CheckCompatibilityMessage icon={<ErrorIcon/>} message={component.status}/>
                 }
             </div>

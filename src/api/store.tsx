@@ -6,6 +6,7 @@ import {RamApi} from "./ramApi";
 import {configurationCompatibilitySlice} from "./slices/componentsSlice";
 import {VideocardApi} from "./videocardApi";
 import {SsdApi} from "./SsdApi";
+import {HddApi} from "./hddApi";
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         [RamApi.reducerPath]: RamApi.reducer,
         [VideocardApi.reducerPath]: VideocardApi.reducer,
         [SsdApi.reducerPath]: SsdApi.reducer,
+        [HddApi.reducerPath]: HddApi.reducer,
         [configurationCompatibilitySlice.name]: configurationCompatibilitySlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -22,7 +24,8 @@ export const store = configureStore({
             .concat(MotherboardApi.middleware)
             .concat(RamApi.middleware)
             .concat(VideocardApi.middleware)
-            .concat(SsdApi.middleware),
+            .concat(SsdApi.middleware)
+            .concat(HddApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

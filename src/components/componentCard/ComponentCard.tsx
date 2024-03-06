@@ -21,8 +21,7 @@ interface ComponentCardProps {
     changeCount?: (newNumber: number) => void;
     number?: number;
     disabled?: boolean
-
-
+    showAddRemove?: boolean
 }
 
 export const ComponentCard: React.FC<ComponentCardProps> = ({
@@ -30,7 +29,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
                                                                 packageName,
                                                                 isShowButton, color,
                                                                 onClick,
-                                                                showCount, changeCount, number,disabled
+                                                                showCount, changeCount, number, disabled, showAddRemove
                                                             }) => {
 
     const myImage = require(`../../images/${packageName}/${image}.png`) as string;
@@ -48,16 +47,18 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
                         {changeCount !== undefined && number !== undefined &&
                             <CountComponent changeCount={changeCount} number={number}/>}
                     </div>
-                    <div className="count" onClick={(e) => e.stopPropagation()}>
-                        <AddNewComponentButton/>
-                    </div>
+                    {showAddRemove &&
+                        <div className="count" onClick={(e) => e.stopPropagation()}>
+                            <AddNewComponentButton component = {packageName}/>
+                        </div>
+                    }
                 </div>
-
             }
             {isShowButton &&
                 <div className="add-to-cart">
                     <div className="price">{price} грн</div>
-                    <PrimaryButton text="Select this item" color={color} label="select this item" disabled={disabled === undefined ? false : disabled }
+                    <PrimaryButton text="Select this item" color={color} label="select this item"
+                                   disabled={disabled === undefined ? false : disabled}
                                    onClick={onClick}/>
                 </div>
             }

@@ -8,11 +8,14 @@ import {VideocardDropDown} from "./components/dropdown/VideocardDropDown";
 import {useSelector} from "react-redux";
 import {RootState} from "./api/store";
 import {SsdDropDown} from "./components/dropdown/SsdDropdown";
+import {HddDropDown} from "./components/dropdown/HddDropDown";
 
 
 function App() {
     let ssds = useSelector((state: RootState) => state.configurationCompatibility.ssd);
+    let hdds = useSelector((state: RootState) => state.configurationCompatibility.hdd);
 
+    console.log(hdds)
     console.log(ssds)
 
     return (
@@ -41,9 +44,24 @@ function App() {
 
                         })
                     )}
+                    {hdds.length === 0 ? (
+                        <HddDropDown hdd={null} chosenHdd={[]}/>
+                    ) : (
+                        hdds.map((hdd, index) => {
+                            if (hdd === null) {
+                                return <HddDropDown index={index} hdd={null} chosenHdd={hdds}/>
+                            }
+                            return (
+                                <HddDropDown
+                                    index={index}
+                                    hdd={hdd}
+                                    chosenHdd={hdds}
+                                />
+                            )
 
+                        })
+                    )}
                 </div>
-
                 <Advices/>
 
             </ComputerContextProvider>
