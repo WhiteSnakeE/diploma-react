@@ -24,11 +24,7 @@ export const SsdDropDown: React.FC<SsdDropdownProps> = ({ssd, chosenSsd, index})
 
     const toggleDropdown = async (selectedValue: Ssd) => {
         const updatedSsd = [...chosenSsd]
-        console.log(index)
         index = index === undefined ? 0 : index
-        // updatedSsd[index] = selectedValue
-        console.log(index)
-        console.log(selectedValue)
         updatedSsd[index] = selectedValue
         const updatedConfig = {
             ...configuration,
@@ -55,7 +51,6 @@ export const SsdDropDown: React.FC<SsdDropdownProps> = ({ssd, chosenSsd, index})
         }
     }
 
-    console.info(chosenSsd)
     return (
 
         <div className="dropdown">

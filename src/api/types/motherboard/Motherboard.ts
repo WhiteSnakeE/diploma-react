@@ -15,7 +15,8 @@ export type Motherboard = {
     expansionSlots: ExpansionSlots | null,
     internalInterfaces: InternalInterfaces | null,
     status: string | null,
-    img: string
+    img: string,
+    size: string
 }
 
 

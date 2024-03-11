@@ -12,10 +12,11 @@ import {Ram} from "../../api/types/ram/Ram";
 import {Videocard} from "../../api/types/videocard/Videocard";
 import {Ssd} from "../../api/types/ssd/Ssd";
 import {Hdd} from "../../api/types/hdd/Hdd";
+import {CpuCooling} from "../../api/types/cooling/CpuCooling";
 
 
 interface ChosenCardProps {
-    component: Processor | Motherboard | Ram | Videocard | Ssd | Hdd |null;
+    component: Processor | Motherboard | Ram | Videocard | Ssd | Hdd | CpuCooling | null;
     imgPackage: string,
     showCount: boolean
     showAddRemove: boolean
@@ -23,7 +24,14 @@ interface ChosenCardProps {
     number?: number;
 }
 
-export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, showCount,changeCount,showAddRemove, number}) => {
+export const ChosenCard: React.FC<ChosenCardProps> = ({
+                                                          component,
+                                                          imgPackage,
+                                                          showCount,
+                                                          changeCount,
+                                                          showAddRemove,
+                                                          number
+                                                      }) => {
 
     // console.log(component)
     return (
@@ -40,9 +48,9 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({component, imgPackage, sh
                                 packageName={imgPackage}
                                 isShowButton={false}
                                 showCount={showCount}
-                                changeCount = {changeCount}
-                                number = {number}
-                                showAddRemove = {showAddRemove}
+                                changeCount={changeCount}
+                                number={number}
+                                showAddRemove={showAddRemove}
                             />
                         </>
                 }

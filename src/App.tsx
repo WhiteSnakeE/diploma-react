@@ -9,6 +9,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "./api/store";
 import {SsdDropDown} from "./components/dropdown/SsdDropdown";
 import {HddDropDown} from "./components/dropdown/HddDropDown";
+import {CpuCoolingDropDown} from "./components/dropdown/CpuCoolingDropDown";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
 
                         })
                     )}
+                    <CpuCoolingDropDown/>
                 </div>
                 <Advices/>
 

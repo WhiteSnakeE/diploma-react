@@ -7,6 +7,7 @@ import {Ram} from "../types/ram/Ram";
 import {Videocard} from "../types/videocard/Videocard";
 import {Ssd} from "../types/ssd/Ssd";
 import {Hdd} from "../types/hdd/Hdd";
+import {CpuCooling} from "../types/cooling/CpuCooling";
 
 
 export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
@@ -19,7 +20,7 @@ export const updateConfiguration = createAsyncThunk<ComputerConfiguration, Compu
                 `${process.env.REACT_APP_BACKEND}/check/compatibility`,
                 configuration
             );
-            console.log(response.data)
+            console.log(response)
             return response.data;
         } catch (error) {
             console.error('Error while checking configuration:', error);
@@ -35,6 +36,7 @@ interface ComputerConfiguration {
     videocard: Videocard | null;
     ssd: (Ssd | null) [];
     hdd: (Hdd | null) [];
+    cpuCooling: CpuCooling | null;
     advices: string[] | null;
 }
 
@@ -45,6 +47,7 @@ const initialState: ComputerConfiguration = {
     videocard: null,
     ssd: [],
     hdd: [],
+    cpuCooling: null,
     advices: null
 };
 
@@ -76,10 +79,15 @@ export const configurationCompatibilitySlice = createSlice({
             state.hdd = action.payload;
             return state;
         },
+        setCpuCooling: (state, action: PayloadAction<CpuCooling>) => {
+            state.cpuCooling = action.payload;
+            return state;
+        },
         setAdvices: (state, action) => {
             state.advices = action.payload;
             return state;
-        }
+        },
+
     },
     extraReducers: (builder) => {
         builder.addCase(updateConfiguration.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
@@ -90,6 +98,7 @@ export const configurationCompatibilitySlice = createSlice({
             state.videocard = data.videocard;
             state.ssd = data.ssd;
             state.hdd = data.hdd;
+            state.cpuCooling = data.cpuCooling
             state.advices = data.advices;
         });
     },

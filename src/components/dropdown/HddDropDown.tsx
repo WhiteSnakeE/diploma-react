@@ -23,10 +23,7 @@ export const HddDropDown: React.FC<HddDropdownProps> = ({hdd, chosenHdd, index})
 
     const toggleDropdown = async (selectedValue: Hdd) => {
         const updatedHdd = [...chosenHdd]
-        console.log(index)
         index = index === undefined ? 0 : index
-        console.log(index)
-        console.log(selectedValue)
         updatedHdd[index] = selectedValue
         const updatedConfig = {
             ...configuration,
@@ -53,7 +50,6 @@ export const HddDropDown: React.FC<HddDropdownProps> = ({hdd, chosenHdd, index})
         }
     }
 
-    console.info(chosenHdd)
     return (
 
         <div className="dropdown">
