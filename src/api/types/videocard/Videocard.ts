@@ -15,5 +15,6 @@ export type Videocard = {
     energyConsumption: number,
     powerUnit: number,
     status: string | null,
-    img: string
+    img: string,
+    size: string
 }
