@@ -10,6 +10,7 @@ import {RootState} from "./api/store";
 import {SsdDropDown} from "./components/dropdown/SsdDropdown";
 import {HddDropDown} from "./components/dropdown/HddDropDown";
 import {CpuCoolingDropDown} from "./components/dropdown/CpuCoolingDropDown";
+import {FrameDropDown} from "./components/dropdown/FrameDropdown";
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
                         })
                     )}
                     <CpuCoolingDropDown/>
+                    <FrameDropDown/>
                 </div>
                 <Advices/>
 

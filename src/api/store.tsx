@@ -8,6 +8,7 @@ import {VideocardApi} from "./videocardApi";
 import {SsdApi} from "./SsdApi";
 import {HddApi} from "./hddApi";
 import {CpuCoolingApi} from "./cpuCoolingApi";
+import {FrameApi} from "./frameApi";
 
 export const store = configureStore({
     reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
         [SsdApi.reducerPath]: SsdApi.reducer,
         [HddApi.reducerPath]: HddApi.reducer,
         [CpuCoolingApi.reducerPath]: CpuCoolingApi.reducer,
+        [FrameApi.reducerPath]: FrameApi.reducer,
         [configurationCompatibilitySlice.name]: configurationCompatibilitySlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -29,6 +31,7 @@ export const store = configureStore({
             .concat(SsdApi.middleware)
             .concat(HddApi.middleware)
             .concat(CpuCoolingApi.middleware)
+            .concat(FrameApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

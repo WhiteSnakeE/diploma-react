@@ -13,10 +13,11 @@ import {Videocard} from "../../api/types/videocard/Videocard";
 import {Ssd} from "../../api/types/ssd/Ssd";
 import {Hdd} from "../../api/types/hdd/Hdd";
 import {CpuCooling} from "../../api/types/cooling/CpuCooling";
+import {Frame} from "../../api/types/frame/Frame";
 
 
 interface ChosenCardProps {
-    component: Processor | Motherboard | Ram | Videocard | Ssd | Hdd | CpuCooling | null;
+    component: Processor | Motherboard | Ram | Videocard | Ssd | Hdd | CpuCooling | Frame | null;
     imgPackage: string,
     showCount: boolean
     showAddRemove: boolean

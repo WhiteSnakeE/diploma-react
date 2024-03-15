@@ -2,7 +2,7 @@ import {Cooling} from "./Cooling";
 import {BaysAndSlots} from "./BaysAndSlots";
 
 export type Frame = {
-    id: string,
+    _id: string,
     name: string,
     price: number,
     img: string,
