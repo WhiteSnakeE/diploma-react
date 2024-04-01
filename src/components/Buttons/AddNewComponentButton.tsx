@@ -38,7 +38,7 @@ export const AddNewComponentButton: React.FC<AddNewComponentButtonProps> = ({com
 
     return (
         <div>
-            <button disabled={ssds.includes(null)}
+            <button disabled={ component === "ssd" ? ssds.includes(null) : hdds.includes(null) }
                     onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
@@ -47,7 +47,7 @@ export const AddNewComponentButton: React.FC<AddNewComponentButtonProps> = ({com
                         }
 
                     }}
-            > Add another ssd
+            > Add another {component === "ssd" ? "ssd": "hdd"}
             </button>
         </div>
     );

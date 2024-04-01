@@ -27,11 +27,20 @@ export const ProcessorDropDown = () => {
             setIsOpen(!isOpen);
         }
     };
+    const removeComponent = async () => {
+        if (processor!= null) {
+            const updatedConfig = {
+                ...configuration,
+                processor: null
+            }
+            dispatch(updateConfiguration(updatedConfig))
+        }
+    };
 
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={processor} imgPackage={"processors"} showCount={true} showAddRemove={false}/>
+                <ChosenCard dropDownName="Processor" component={processor} removeComponent={removeComponent} imgPackage={"processors"} showCount={true} showAddRemove={false}/>
             </article>
             {isOpen && (
                 <ul>

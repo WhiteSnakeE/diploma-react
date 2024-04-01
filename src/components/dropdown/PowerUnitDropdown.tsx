@@ -1,28 +1,28 @@
+import {MotherboardApi} from "../../api/motherboardApi";
 import React, {useState} from "react";
 import {RootState, useAppDispatch} from "../../api/store";
 import {updateConfiguration} from "../../api/slices/componentsSlice";
 import {useSelector} from "react-redux";
+import {Motherboard} from "../../api/types/motherboard/Motherboard";
 import "./Dropdown.css";
-import {CpuCoolingApi} from "../../api/cpuCoolingApi";
-import {CpuCooling} from "../../api/types/cooling/CpuCooling";
-import {FrameApi} from "../../api/frameApi";
-import {Frame} from "../../api/types/frame/Frame";
 import {ChosenCard} from "../chosenCard/ChosenCard";
 import {ComponentCard} from "../componentCard/ComponentCard";
+import {PowerUnitApi} from "../../api/powerUnitApi";
+import {PowerUnit} from "../../api/types/powerUnit/PowerUnit";
 
-export const FrameDropDown: React.FC = () => {
-    const {data: frames, error, isLoading} = FrameApi.useGetAllFramesQuery();
+export const PowerUnitDropdown: React.FC = () => {
+    const {data: powerUnits, error, isLoading} = PowerUnitApi.useGetAllPowerUnitsQuery();
     const [isOpen, setIsOpen] = useState(false);
-    const frame = useSelector((state: RootState) => state.configurationCompatibility.frame);
+    const powerUnit = useSelector((state: RootState) => state.configurationCompatibility.powerUnit);
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch()
-    const toggleDropdown = async (selectedValue: Frame) => {
+    const toggleDropdown = async (selectedValue: PowerUnit) => {
         const selectedIndex = selectedValue;
-        const selectedObject = frames?.find(cpuCooling => cpuCooling === selectedIndex);
+        const selectedObject = powerUnits?.find(powerUnit => powerUnit === selectedIndex);
         if (selectedObject) {
             const updatedConfig = {
                 ...configuration,
-                frame: selectedObject
+                powerUnit: selectedObject
             }
             dispatch(updateConfiguration(updatedConfig))
             setIsOpen(!isOpen);
@@ -30,26 +30,26 @@ export const FrameDropDown: React.FC = () => {
     };
 
     const removeComponent = async () => {
-        if (frame!= null) {
+        if (powerUnit!= null) {
             const updatedConfig = {
                 ...configuration,
-                frame: null
+                powerUnit: null
             }
             dispatch(updateConfiguration(updatedConfig))
         }
     };
 
+
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard dropDownName="Frame" component={frame} imgPackage={"frame"} showCount={true} showAddRemove={false} removeComponent={removeComponent}/>
+                <ChosenCard dropDownName="Power Unit" component={powerUnit} removeComponent={removeComponent} imgPackage={"powerUnits"} showCount={true} showAddRemove={false}/>
             </article>
             {isOpen && (
                 <ul>
-                    {frames?.map(item => (
+                    {powerUnits?.map(item => (
                         <li className="dropdown" key={item._id}>
-                            <ComponentCard image={item.img} name={item.name} price={item.price}
-                                           packageName={"frame"}
+                            <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"powerUnits"}
                                            isShowButton={true} color={"grey"} onClick={() => toggleDropdown(item)}
                             />
                         </li>
@@ -59,7 +59,6 @@ export const FrameDropDown: React.FC = () => {
 
         </div>
     );
-
 };
 
 

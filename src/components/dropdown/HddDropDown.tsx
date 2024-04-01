@@ -49,13 +49,22 @@ export const HddDropDown: React.FC<HddDropdownProps> = ({hdd, chosenHdd, index})
             dispatch(updateConfiguration(updatedConfig))
         }
     }
+    const removeComponent = async () => {
+        if (hdd!= null) {
+            const updatedConfig = {
+                ...configuration,
+                hdd: []
+            }
+            dispatch(updateConfiguration(updatedConfig))
+        }
+    };
 
     return (
 
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={hdd} imgPackage={"hdd"} showCount={true} showAddRemove={true}
-                            changeCount={changeCount} number={number}/>
+                <ChosenCard dropDownName="HDD" component={hdd} imgPackage={"hdd"} showCount={true} showAddRemove={true}
+                            changeCount={changeCount} number={hdd?.count} removeComponent={removeComponent}/>
             </article>
 
             {isOpen && (

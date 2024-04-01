@@ -9,6 +9,7 @@ import {Ssd} from "../types/ssd/Ssd";
 import {Hdd} from "../types/hdd/Hdd";
 import {CpuCooling} from "../types/cooling/CpuCooling";
 import {Frame} from "../types/frame/Frame";
+import {PowerUnit} from "../types/powerUnit/PowerUnit";
 
 
 export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
@@ -39,6 +40,7 @@ interface ComputerConfiguration {
     hdd: (Hdd | null) [];
     cpuCooling: CpuCooling | null;
     frame: Frame | null;
+    powerUnit: PowerUnit | null;
     advices: string[] | null;
 }
 
@@ -51,6 +53,7 @@ const initialState: ComputerConfiguration = {
     hdd: [],
     cpuCooling: null,
     frame: null,
+    powerUnit: null,
     advices: null
 };
 
@@ -90,6 +93,10 @@ export const configurationCompatibilitySlice = createSlice({
             state.frame = action.payload;
             return state;
         },
+        setPowerUnits: (state, action: PayloadAction<PowerUnit>) => {
+            state.powerUnit = action.payload;
+            return state;
+        },
         setAdvices: (state, action) => {
             state.advices = action.payload;
             return state;
@@ -107,6 +114,7 @@ export const configurationCompatibilitySlice = createSlice({
             state.hdd = data.hdd;
             state.cpuCooling = data.cpuCooling;
             state.frame = data.frame;
+            state.powerUnit = data.powerUnit
             state.advices = data.advices;
         });
     },

@@ -42,10 +42,20 @@ export const RamDropDown = () => {
         }
     }
 
+    const removeComponent = async () => {
+        if (ram!= null) {
+            const updatedConfig = {
+                ...configuration,
+                ram: null
+            }
+            dispatch(updateConfiguration(updatedConfig))
+        }
+    };
+
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={ram} imgPackage={"rams"} showCount={true} showAddRemove={false} changeCount={changeCount} number={number}/>
+                <ChosenCard dropDownName="RAM" component={ram} imgPackage={"rams"} removeComponent={removeComponent} showCount={true} showAddRemove={false} changeCount={changeCount} number={number}/>
             </article>
             {isOpen && (
                 <ul>

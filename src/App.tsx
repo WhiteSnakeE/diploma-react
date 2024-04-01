@@ -11,6 +11,7 @@ import {SsdDropDown} from "./components/dropdown/SsdDropdown";
 import {HddDropDown} from "./components/dropdown/HddDropDown";
 import {CpuCoolingDropDown} from "./components/dropdown/CpuCoolingDropDown";
 import {FrameDropDown} from "./components/dropdown/FrameDropdown";
+import {PowerUnitDropdown} from "./components/dropdown/PowerUnitDropdown";
 
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
                     )}
                     <CpuCoolingDropDown/>
                     <FrameDropDown/>
+                    <PowerUnitDropdown/>
                 </div>
                 <Advices/>
 

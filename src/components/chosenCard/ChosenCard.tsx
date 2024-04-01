@@ -14,15 +14,18 @@ import {Ssd} from "../../api/types/ssd/Ssd";
 import {Hdd} from "../../api/types/hdd/Hdd";
 import {CpuCooling} from "../../api/types/cooling/CpuCooling";
 import {Frame} from "../../api/types/frame/Frame";
+import {PowerUnit} from "../../api/types/powerUnit/PowerUnit";
 
 
 interface ChosenCardProps {
-    component: Processor | Motherboard | Ram | Videocard | Ssd | Hdd | CpuCooling | Frame | null;
+    component: Processor | Motherboard | Ram | Videocard | Ssd | Hdd | CpuCooling | Frame | PowerUnit | null;
     imgPackage: string,
     showCount: boolean
     showAddRemove: boolean
     changeCount?: (newNumber: number) => void;
     number?: number;
+    dropDownName: string;
+    removeComponent?: () => Promise<void>;
 }
 
 export const ChosenCard: React.FC<ChosenCardProps> = ({
@@ -31,7 +34,9 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({
                                                           showCount,
                                                           changeCount,
                                                           showAddRemove,
-                                                          number
+                                                          number,
+                                                          dropDownName,
+                                                          removeComponent
                                                       }) => {
 
     // console.log(component)
@@ -40,7 +45,7 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({
             <div className="split-view__large">
                 {
                     component?.name == null ?
-                        <div>Choose the element</div> :
+                        <div>Choose the {dropDownName}</div> :
                         <>
                             <ComponentCard
                                 image={component.img}
@@ -52,6 +57,7 @@ export const ChosenCard: React.FC<ChosenCardProps> = ({
                                 changeCount={changeCount}
                                 number={number}
                                 showAddRemove={showAddRemove}
+                                removeComponent={removeComponent}
                             />
                         </>
                 }

@@ -26,12 +26,21 @@ export const CpuCoolingDropDown: React.FC = () => {
             setIsOpen(!isOpen);
         }
     };
+    const removeComponent = async () => {
+        if (cpuCooling!= null) {
+            const updatedConfig = {
+                ...configuration,
+                cpuCooling: null
+            }
+            dispatch(updateConfiguration(updatedConfig))
+        }
+    };
 
     console.log(cpuCooling)
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={cpuCooling} imgPackage={"cooling"} showCount={true} showAddRemove={false}/>
+                <ChosenCard dropDownName="CPU cooler" component={cpuCooling} imgPackage={"cooling"} showCount={true} showAddRemove={false} removeComponent={removeComponent}/>
             </article>
             {isOpen && (
                 <ul>

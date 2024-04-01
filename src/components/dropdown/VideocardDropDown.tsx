@@ -27,10 +27,20 @@ export const VideocardDropDown: React.FC = () => {
         }
     };
 
+    const removeComponent = async () => {
+        if (videocard!= null) {
+            const updatedConfig = {
+                ...configuration,
+                videocard: null
+            }
+            dispatch(updateConfiguration(updatedConfig))
+        }
+    };
+
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={videocard} imgPackage={"videocards"} showCount={true} showAddRemove={false}/>
+                <ChosenCard dropDownName="GPU" component={videocard} removeComponent={removeComponent} imgPackage={"videocards"} showCount={true} showAddRemove={false}/>
             </article>
             {isOpen && (
                 <ul>

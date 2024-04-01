@@ -22,6 +22,7 @@ interface ComponentCardProps {
     number?: number;
     disabled?: boolean
     showAddRemove?: boolean
+    removeComponent?: () => Promise<void>;
 }
 
 export const ComponentCard: React.FC<ComponentCardProps> = ({
@@ -29,7 +30,8 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
                                                                 packageName,
                                                                 isShowButton, color,
                                                                 onClick,
-                                                                showCount, changeCount, number, disabled, showAddRemove
+                                                                showCount,
+                                                                removeComponent, changeCount, number, disabled, showAddRemove
                                                             }) => {
 
     const myImage = require(`../../images/${packageName}/${image}.png`) as string;
@@ -48,10 +50,22 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
                             <CountComponent changeCount={changeCount} number={number}/>}
                     </div>
                     {showAddRemove &&
-                        <div className="count" onClick={(e) => e.stopPropagation()}>
-                            <AddNewComponentButton component = {packageName}/>
+                        <div>
+                            <div className="count" onClick={(e) => e.stopPropagation()}>
+                                <AddNewComponentButton component = {packageName}/>
+                            </div>
                         </div>
+
                     }
+                    <button onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (removeComponent) {
+                            removeComponent();
+                        }
+                    }}>
+                        Remove Component
+                    </button>
                 </div>
             }
             {isShowButton &&

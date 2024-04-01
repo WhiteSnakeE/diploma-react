@@ -32,8 +32,6 @@ export const SsdDropDown: React.FC<SsdDropdownProps> = ({ssd, chosenSsd, index})
         }
         dispatch(updateConfiguration(updatedConfig))
         setIsOpen(!isOpen);
-
-
     };
 
     const changeCount = (newNumber: number) => {
@@ -51,12 +49,24 @@ export const SsdDropDown: React.FC<SsdDropdownProps> = ({ssd, chosenSsd, index})
         }
     }
 
+    const removeComponent = async () => {
+        if (ssd != null) {
+            const updated = chosenSsd.filter((i) => i?.name !== ssd.name)
+            const updatedConfig = {
+                ...configuration,
+                ssd: updated
+            }
+            
+            dispatch(updateConfiguration(updatedConfig))
+        }
+    };
+
     return (
 
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard component={ssd} imgPackage={"ssd"} showCount={true} showAddRemove={true}
-                            changeCount={changeCount} number={number}/>
+                <ChosenCard dropDownName="SSD" component={ssd} imgPackage={"ssd"} showCount={true} showAddRemove={true}
+                            changeCount={changeCount} number={ssd?.count} removeComponent={removeComponent}/>
             </article>
 
             {isOpen && (
