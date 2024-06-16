@@ -7,6 +7,7 @@ import {Ram} from "../../api/types/ram/Ram";
 import "./Dropdown.css";
 import {ChosenCard} from "../chosenCard/ChosenCard";
 import {ComponentCard} from "../componentCard/ComponentCard";
+import "./PaginationContainer.css";
 
 export const RamDropDown = () => {
     const {data: rams, error, isLoading} = useGetAllRamsQuery();
@@ -15,6 +16,9 @@ export const RamDropDown = () => {
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch();
     const [number, setNumber] = useState(1);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
 
     const toggleDropdown = async (selectedValue: Ram) => {
@@ -43,7 +47,7 @@ export const RamDropDown = () => {
     }
 
     const removeComponent = async () => {
-        if (ram!= null) {
+        if (ram != null) {
             const updatedConfig = {
                 ...configuration,
                 ram: null
@@ -52,21 +56,69 @@ export const RamDropDown = () => {
         }
     };
 
+    if (!rams || rams.length === 0) {
+        return (
+            <div className="dropdown">
+                <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
+                    <ChosenCard
+                        dropDownName="RAM"
+                        component={ram}
+                        imgPackage={"rams"}
+                        showCount={true}
+                        showAddRemove={false}
+                        removeComponent={removeComponent}
+                    />
+                </article>
+                {isOpen && <p>No items to display.</p>}
+            </div>
+        );
+    }
+
+    const totalPages = Math.ceil(rams.length / itemsPerPage);
+    const currentItems = rams.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+
+    const renderPageNumbers = () => {
+        const pageNumbers = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pageNumbers.push(
+                <button
+                    key={i}
+                    className={currentPage === i ? 'active' : ''}
+                    onClick={() => setCurrentPage(i)}
+                >
+                    {i}
+                </button>
+            );
+        }
+        return (
+            <div className="pagination-container">
+                {pageNumbers}
+            </div>
+        );
+    };
+
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
-                <ChosenCard dropDownName="RAM" component={ram} imgPackage={"rams"} removeComponent={removeComponent} showCount={true} showAddRemove={false} changeCount={changeCount} number={number}/>
+                <ChosenCard dropDownName="RAM" component={ram} imgPackage={"rams"} removeComponent={removeComponent}
+                            showCount={true} showAddRemove={false} changeCount={changeCount} number={number}/>
             </article>
             {isOpen && (
-                <ul>
-                    {rams?.map(item => (
-                        <li className="dropdown" key={item._id}>
-                            <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"rams"}
-                                           isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
-                            />
-                        </li>
-                    ))}
-                </ul>
+                <div>
+                    <ul>
+                        {currentItems.map(item => (
+                            <li className="dropdown" key={item._id}>
+                                <ComponentCard image={item.img} name={item.name} price={item.price} packageName={"rams"}
+                                               isShowButton={true} color={"green"} onClick={() => toggleDropdown(item)}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="pagination">
+                        {renderPageNumbers()}
+                    </div>
+                </div>
             )}
 
         </div>

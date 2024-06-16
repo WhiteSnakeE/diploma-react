@@ -14,6 +14,11 @@ export const MotherboardDropDown: React.FC = () => {
     const motherboard = useSelector((state: RootState) => state.configurationCompatibility.motherboard);
     const configuration = useSelector((state: RootState) => state.configurationCompatibility);
     const dispatch = useAppDispatch()
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+
     const toggleDropdown = async (selectedValue: Motherboard) => {
         const selectedIndex = selectedValue;
         const selectedObject = motherboards?.find(motherboard => motherboard === selectedIndex);
@@ -27,7 +32,7 @@ export const MotherboardDropDown: React.FC = () => {
         }
     };
     const removeComponent = async () => {
-        if (motherboard!= null) {
+        if (motherboard != null) {
             const updatedConfig = {
                 ...configuration,
                 motherboard: null
@@ -36,24 +41,71 @@ export const MotherboardDropDown: React.FC = () => {
         }
     };
 
+    if (!motherboards || motherboards.length === 0) {
+        return (
+            <div className="dropdown">
+                <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
+                    <ChosenCard
+                        dropDownName="Motherboard"
+                        component={motherboard}
+                        imgPackage={"motherboards"}
+                        showCount={true}
+                        showAddRemove={false}
+                        removeComponent={removeComponent}
+                    />
+                </article>
+                {isOpen && <p>No items to display.</p>}
+            </div>
+        );
+    }
+
+    const totalPages = Math.ceil(motherboards.length / itemsPerPage);
+    const currentItems = motherboards.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+
+    const renderPageNumbers = () => {
+        const pageNumbers = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pageNumbers.push(
+                <button
+                    key={i}
+                    className={currentPage === i ? 'active' : ''}
+                    onClick={() => setCurrentPage(i)}
+                >
+                    {i}
+                </button>
+            );
+        }
+        return (
+            <div className="pagination-container">
+                {pageNumbers}
+            </div>
+        );
+    };
+
 
     return (
         <div className="dropdown">
             <article className="dropbtn" onClick={() => setIsOpen(!isOpen)}>
                 <ChosenCard dropDownName="Motherboard" component={motherboard} imgPackage={"motherboards"}
-                            showCount={true} showAddRemove={false} removeComponent = {removeComponent}/>
+                            showCount={true} showAddRemove={false} removeComponent={removeComponent}/>
             </article>
             {isOpen && (
-                <ul>
-                    {motherboards?.map(item => (
-                        <li className="dropdown" key={item._id}>
-                            <ComponentCard image={item.img} name={item.name} price={item.price}
-                                           packageName={"motherboards"}
-                                           isShowButton={true} color={"grey"} onClick={() => toggleDropdown(item)}
-                            />
-                        </li>
-                    ))}
-                </ul>
+                <div>
+                    <ul>
+                        {currentItems.map(item => (
+                            <li className="dropdown" key={item._id}>
+                                <ComponentCard image={item.img} name={item.name} price={item.price}
+                                               packageName={"motherboards"}
+                                               isShowButton={true} color={"grey"} onClick={() => toggleDropdown(item)}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="pagination">
+                        {renderPageNumbers()}
+                    </div>
+                </div>
             )}
 
         </div>

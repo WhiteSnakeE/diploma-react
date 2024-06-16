@@ -12,6 +12,7 @@ import {HddDropDown} from "./components/dropdown/HddDropDown";
 import {CpuCoolingDropDown} from "./components/dropdown/CpuCoolingDropDown";
 import {FrameDropDown} from "./components/dropdown/FrameDropdown";
 import {PowerUnitDropdown} from "./components/dropdown/PowerUnitDropdown";
+import {CallGPT} from "./components/gptComponent/CallGPT";
 
 
 function App() {
@@ -67,8 +68,10 @@ function App() {
                     <CpuCoolingDropDown/>
                     <FrameDropDown/>
                     <PowerUnitDropdown/>
+
                 </div>
                 <Advices/>
+                <CallGPT/>
 
             </ComputerContextProvider>
         </div>

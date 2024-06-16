@@ -15,7 +15,7 @@ import {PowerUnit} from "../types/powerUnit/PowerUnit";
 export const updateConfiguration = createAsyncThunk<ComputerConfiguration, ComputerConfiguration, {
     dispatch: AppDispatch
 }>(
-    'check/configuration',
+    'check/configuration/update',
     async (configuration, {dispatch}) => {
         try {
             const response = await axios.post<ComputerConfiguration>(
@@ -30,6 +30,22 @@ export const updateConfiguration = createAsyncThunk<ComputerConfiguration, Compu
         }
     }
 );
+
+export const sendResult = createAsyncThunk<ComputerConfiguration, string, {
+    dispatch: AppDispatch
+}>('check/configuration/send', async (result, { dispatch }) => {
+    try {
+        const response = await axios.post<ComputerConfiguration>(
+            `${process.env.REACT_APP_BACKEND}/gpt/get/result`,
+            result
+        );
+        console.log(response)
+        return response.data;
+    } catch (error) {
+        console.error('Error while checking configuration:', error);
+        throw error;
+    }
+});
 
 interface ComputerConfiguration {
     motherboard: Motherboard | null;
@@ -97,7 +113,7 @@ export const configurationCompatibilitySlice = createSlice({
             state.powerUnit = action.payload;
             return state;
         },
-        setAdvices: (state, action) => {
+        setAdvices: (state, action:PayloadAction<string[]>) => {
             state.advices = action.payload;
             return state;
         },
@@ -105,6 +121,19 @@ export const configurationCompatibilitySlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(updateConfiguration.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
+            const data = action.payload;
+            state.motherboard = data.motherboard;
+            state.processor = data.processor;
+            state.ram = data.ram;
+            state.videocard = data.videocard;
+            state.ssd = data.ssd;
+            state.hdd = data.hdd;
+            state.cpuCooling = data.cpuCooling;
+            state.frame = data.frame;
+            state.powerUnit = data.powerUnit
+            state.advices = data.advices;
+        });
+        builder.addCase(sendResult.fulfilled, (state, action: PayloadAction<ComputerConfiguration>) => {
             const data = action.payload;
             state.motherboard = data.motherboard;
             state.processor = data.processor;

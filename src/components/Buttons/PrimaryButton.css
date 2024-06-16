@@ -15,6 +15,7 @@
 
 .primary-button .text {
     line-height: 20px;
+    white-space: normal;
 }
 
 .primary-button .icon-container {

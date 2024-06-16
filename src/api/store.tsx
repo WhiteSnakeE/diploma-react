@@ -10,6 +10,8 @@ import {HddApi} from "./hddApi";
 import {CpuCoolingApi} from "./cpuCoolingApi";
 import {FrameApi} from "./frameApi";
 import {PowerUnitApi} from "./powerUnitApi";
+// import {GptApi} from "./gptApi";
+import {gptCallSlice} from "./slices/gptSlice";
 
 export const store = configureStore({
     reducer: {
@@ -23,6 +25,9 @@ export const store = configureStore({
         [FrameApi.reducerPath]: FrameApi.reducer,
         [PowerUnitApi.reducerPath]: PowerUnitApi.reducer,
         [configurationCompatibilitySlice.name]: configurationCompatibilitySlice.reducer,
+        [gptCallSlice.name]: gptCallSlice.reducer,
+        // [GptApi.reducerPath]: GptApi.reducer,
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -35,6 +40,7 @@ export const store = configureStore({
             .concat(CpuCoolingApi.middleware)
             .concat(FrameApi.middleware)
             .concat(PowerUnitApi.middleware)
+            // .concat(GptApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>
